@@ -1,0 +1,72 @@
+{
+  "Rooms": [
+    {
+      "Name": "",
+      "Display Name": "",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "",
+      "Items": [""],
+      "Connected Rooms": [
+        {
+          "Inward": "Destination"
+        }
+      ]
+    }
+  ],
+  "Items": [
+    {
+      "Name": "",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": ""
+    }
+  ],
+  "NPCs": [
+    {
+      "Name": "",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Dialogue": "",
+      "Alternate Dialogue": [""]
+    }
+  ],
+  "Starting Room": "Examination Room",
+  "Starting Inventory": [""],
+  "Intro Text": [""],
+  "Synonym Dictionary": {
+    "Info": [""],
+    "Go": [""],
+    "Inspect": [""],
+    "Take": [""],
+    "Open": [""],
+    "Craft": [""],
+    "Interact": [""],
+    "Quit": [""],
+    "Replay": [""]
+  },
+  "Crafting Recipes": {
+    "Result Item": "",
+    "Recipe": [""]
+  },
+  "End Conditions": [
+    {
+      "Win": true,
+      "Room Requirement": "",
+      "Item Requirements": [""],
+      "NPC Status Requirements": [""]
+    }
+  ]
+}

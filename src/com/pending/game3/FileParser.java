@@ -5,7 +5,7 @@ class FileParser {
         String startingInventory[];
         Room roomsAtStart[];
         Item itemsAtStart[];
-        NPC npcsAtStart[];
+        Npc npcsAtStart[];
         CraftingRecipe recipes[];
         EndCondition endCondition[];
 

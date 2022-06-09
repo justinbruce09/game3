@@ -17,6 +17,7 @@ class Game3 {
     private Room[] rooms;
     private Item[] items;
     private Npc[] npcs;
+    private Scanner reader;
 
     //singleton
     private static Game3 instance;
@@ -30,8 +31,53 @@ class Game3 {
     private Game3(){}
     //end singleton
 
+    //accessors
+    static void setInventory(String[] newInventory){
+        instance.inventory = newInventory;
+    }
+
+    static void setCurrentRoom(Room newCurrentRoom){
+        instance.currentRoom = newCurrentRoom;
+    }
+
+    static void setRooms(Room[] newRooms){
+        instance.rooms = newRooms;
+    }
+
+    static void setItems(Item[] newItems){
+        instance.items = newItems;
+    }
+
+    static void setNpcs(Npc[] newNpcs){
+        instance.npcs = newNpcs;
+    }
+
+    static String[] getInventory(){
+        return instance.inventory;
+    }
+
+    static Room getCurrentRoom(){
+        return instance.currentRoom;
+    }
+
+    static Room[] getRooms(){
+        return instance.rooms;
+    }
+
+    static Item[] getItems(){
+        return instance.items;
+    }
+
+    static Npc[] getNpcs(){
+        return instance.npcs;
+    }
+
+
+
+
     private void run() {
-        Scanner reader = new Scanner(System.in);
+        inputParser = new InputParser();
+        reader = new Scanner(System.in);
         System.out.println(mainSplash);
         try (Stream<Path> stream = Files.list(Path.of(jsonDir))) {
             List<Path> files = getJsonList(stream);
@@ -46,8 +92,13 @@ class Game3 {
 
     private void mainLoop() {
         while (true) {
-
+            displayRoom();
+            inputParser.getInput(reader);
         }
+    }
+
+    private void displayRoom() {
+
     }
 
     private boolean promptUserForFile(Scanner reader, List<Path> files) {

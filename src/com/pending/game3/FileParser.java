@@ -1,5 +1,6 @@
 package com.pending.game3;
 
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import  org.json.simple.parser.JSONParser;
 
@@ -17,6 +18,7 @@ class FileParser {
         Npc npcsAtStart[];
         CraftingRecipe recipes[];
         EndCondition endCondition[];
+        private static JSONObject jsonObject;
 
         //ctor
         private FileParser(){
@@ -25,6 +27,7 @@ class FileParser {
         static FileParser loadFile(Path test1) throws FileNotFoundException {
                 // created parser
                 Object obj = new JSONValue().parse(new FileReader(String.valueOf(test1)));
+                jsonObject = (JSONObject) obj;
                 return new FileParser();
         }
 }

@@ -41,8 +41,13 @@ class Game3 {
             System.out.println("Unable to locate resources\\json folder.");
             return;
         }
+        mainLoop();
+    }
 
+    private void mainLoop() {
+        while (true) {
 
+        }
     }
 
     private boolean promptUserForFile(Scanner reader, List<Path> files) {

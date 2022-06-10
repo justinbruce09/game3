@@ -2,6 +2,6 @@ package com.pending.game3;
 
 class Item {
     String description;
-    Flag[] flags;
+    List<Flag> flags;
     String name;
 }

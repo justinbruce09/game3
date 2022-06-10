@@ -3,9 +3,9 @@ package com.pending.game3;
 public class Flag {
 
     final String name;
-    final String[] data;
+    final List<String> data;
 
-    public Flag(String name, String[] data) {
+    public Flag(String name, List<String> data) {
         this.name = name;
         this.data = data;
     }

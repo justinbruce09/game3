@@ -36,7 +36,7 @@ class FileParser {
                 Room room = new Room();
                 room.description = "What appears to be an examination room with three walls, one of which " +
                                    "is curved outward and has a door in it.";
-                room.items = new ArrayList<>();
+                room.items = new ArrayList<String>();
                 room.items.add("Body-Scanning Device");
                 room.items.add("Medicine");
                 room.items.add("Surgical Instrument Trolley");

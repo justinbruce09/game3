@@ -1,28 +1,31 @@
 package com.pending.game3;
 
+import java.util.Dictionary;
+import java.util.List;
+
 class Room {
     private List<Flag> flags;
     List<String> items;
     List<String> npcs;
-    List<String> connections;
+    Dictionary<String, String> connections;
     String description;
     String name;
     String displayName;
 
-    takeItem(String itemToTake){
-        if item.contains(itemToTake){
-                Game3.getInventory.add(itemToTake);
-                items.delete(itemToTake);
+    void takeItem(String itemToTake){
+        if (items.contains(itemToTake)){
+                Game3.getInventory().add(itemToTake);
+                items.remove(itemToTake);
             }
     }
 
-    look(){
+    void look(){
     }
 
-    enter(){
+    void enter(){
     }
 
-    craft(){
+    void craft(){
     }
 
 }

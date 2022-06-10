@@ -12,11 +12,11 @@ class Game3 {
     public static final String mainSplash = "Insert Splash\nScreen Graphic\nHere!";
     private FileParser fileParser;
     private InputParser inputParser;
-    private String[] inventory;
+    private List<String> inventory;
     private Room currentRoom;
-    private Room[] rooms;
-    private Item[] items;
-    private Npc[] npcs;
+    private List<Room> rooms;
+    private List<Item> items;
+    private List<Npc> npcs;
     private Scanner reader;
 
     //singleton
@@ -32,7 +32,7 @@ class Game3 {
     //end singleton
 
     //accessors
-    static void setInventory(String[] newInventory){
+    static void setInventory(List<String> newInventory){
         instance.inventory = newInventory;
     }
 
@@ -40,19 +40,19 @@ class Game3 {
         instance.currentRoom = newCurrentRoom;
     }
 
-    static void setRooms(Room[] newRooms){
+    static void setRooms(List<Room> newRooms){
         instance.rooms = newRooms;
     }
 
-    static void setItems(Item[] newItems){
+    static void setItems(List<Item> newItems){
         instance.items = newItems;
     }
 
-    static void setNpcs(Npc[] newNpcs){
+    static void setNpcs(List<Npc> newNpcs){
         instance.npcs = newNpcs;
     }
 
-    static String[] getInventory(){
+    static List<String> getInventory(){
         return instance.inventory;
     }
 
@@ -60,15 +60,15 @@ class Game3 {
         return instance.currentRoom;
     }
 
-    static Room[] getRooms(){
+    static List<Room> getRooms(){
         return instance.rooms;
     }
 
-    static Item[] getItems(){
+    static List<Item> getItems(){
         return instance.items;
     }
 
-    static Npc[] getNpcs(){
+    static List<Npc> getNpcs(){
         return instance.npcs;
     }
 
@@ -93,7 +93,9 @@ class Game3 {
     private void mainLoop() {
         while (true) {
             displayRoom();
-            inputParser.getInput(reader);
+            if(inputParser.getInput(reader)) {
+                break;
+            }
         }
     }
 

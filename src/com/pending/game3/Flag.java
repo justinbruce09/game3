@@ -1,4 +1,12 @@
 package com.pending.game3;
 
-class Flag {
+public class Flag {
+
+    final String name;
+    final String[] data;
+
+    public Flag(String name, String[] data) {
+        this.name = name;
+        this.data = data;
+    }
 }

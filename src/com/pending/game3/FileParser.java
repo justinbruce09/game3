@@ -41,8 +41,8 @@ class FileParser {
                 room.items.add("Medicine");
                 room.items.add("Surgical Instrument Trolley");
                 room.items.add("Key Card");
-                room.flags = new Flag[0];
-                room.npcs = new String[0];
+                room.flags = new ArrayList<>();
+                room.npcs = new ArrayList<>();
                 room.name = "Examination Room";
                 room.displayName = "Examination Room";
                 toReturn.roomsAtStart.add(room);
@@ -50,32 +50,32 @@ class FileParser {
                 toReturn.itemsAtStart = new ArrayList<>();
                 Item item = new Item();
                 item.name = "Body-Scanning Device";
-                item.flags = new Flag[0];
+                item.flags = new ArrayList<>();
                 item.description = "You think this devices is intended for anatomical scanning, but it looks really" +
                         " similar to a nightstick. You could probably bash some head with it.";
                 toReturn.itemsAtStart.add(item);
                 item = new Item();
                 item.name = "Medicine";
-                item.flags = new Flag[0];
+                item.flags = new ArrayList<>();
                 item.description = "This looks like an assortment of medicines, probably shouldn't use any until " +
                         "you find out what they do.";
                 toReturn.itemsAtStart.add(item);
                 item = new Item();
                 item.name = "Key Card";
-                item.flags = new Flag[1];
-                String[] flagData = new String[1];
-                flagData[0] = "Key1";
+                item.flags = new ArrayList<>();
+                List<String> flagData = new ArrayList<>();
+                flagData.add("Key1") ;
                 Flag flag = new Flag("Key", flagData);
-                item.flags[0] = flag;
+                item.flags.add(flag);
                 item.description = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
                         "shows.";
                 toReturn.itemsAtStart.add(item);
                 item = new Item();
                 item.name = "Surgical Instrument Trolley";
-                item.flags = new Flag[1];
-                flagData = new String[0];
+                item.flags = new ArrayList<>();
+                flagData = new ArrayList<>();
                 flag = new Flag("Decor", flagData);
-                item.flags[0] = flag;
+                item.flags.add(flag);
                 item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
                 toReturn.itemsAtStart.add(item);
                 toReturn.npcsAtStart = new ArrayList<>();

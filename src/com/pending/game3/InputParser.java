@@ -1,5 +1,6 @@
 package com.pending.game3;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -12,10 +13,10 @@ class InputParser {
         String input = userInput.nextLine().toLowerCase(); // Reads user input
 
         String[] inputSplit = input.split(" ", 2); // splits array in 2 after 1st space
-        System.out.println(inputSplit[0] + "," + inputSplit[1]); // everything after space is element 1
+//        System.out.println(inputSplit[0] + "," + inputSplit[1]); // everything after space is element 1
         SynonymDictionary command = null;
         try{
-            command = SynonymDictionary.valueOf(inputSplit[0]); //command = verb
+            command = SynonymDictionary.valueOf(inputSplit[0].toUpperCase()); //command = verb
         } catch (Exception e){
             if (SynonymDictionary.GO.synonyms.contains(inputSplit[0])) { //if a synonym of "go" in syn dict use go
                 command = SynonymDictionary.GO;
@@ -37,9 +38,8 @@ class InputParser {
             case INSPECT:
                 if("room".equalsIgnoreCase(inputSplit[1])){
                 System.out.println(Game3.getCurrentRoom().description);
-                }
-                    if (Game3.getCurrentRoom().items.contains(inputSplit[1])) {
-                        System.out.println(Game3.getItems().get(inputSplit[1]));
+                } else if (Game3.getCurrentRoom().items.contains(inputSplit[1])) {
+                        System.out.println(Game3.getItems().get(inputSplit[1]).description);
                     } else {
                         System.out.println("Item does not exist");
                     }
@@ -51,6 +51,10 @@ class InputParser {
                 break;
             case QUIT:
                 return true;
+            case INFO:
+                for (SynonymDictionary synDict: SynonymDictionary.values()) {
+                    System.out.println("Command: " + synDict.name() + " valid aliases: " + synDict.synonyms);
+                }
             default:
                 System.out.println("Command not yet supported");
        }

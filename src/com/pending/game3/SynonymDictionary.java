@@ -1,5 +1,8 @@
 package com.pending.game3;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum SynonymDictionary {
     INFO,
     GO,
@@ -11,5 +14,6 @@ public enum SynonymDictionary {
     QUIT,
     REPLAY;
 
-    String[] synonym;
+    List<String> synonyms = new ArrayList<>();
+
 }

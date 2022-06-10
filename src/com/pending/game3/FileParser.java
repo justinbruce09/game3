@@ -29,8 +29,8 @@ class FileParser {
         static FileParser loadFile(Path test1) throws FileNotFoundException {
                 FileParser toReturn = new FileParser();
                 // created parser
-                Object obj = JSONValue.parse(new FileReader(String.valueOf(test1)));
-                jsonObject = (JSONObject) obj;
+//                Object obj = JSONValue.parse(new FileReader(String.valueOf(test1)));
+//                jsonObject = (JSONObject) obj;
 
                 //Dummy logic for Iteration 1 MVP, will replace with actual JSON parsing in Iteration 2
                 toReturn.startingInventory = new ArrayList<>();

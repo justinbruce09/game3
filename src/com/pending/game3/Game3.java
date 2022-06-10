@@ -2,6 +2,7 @@ package com.pending.game3;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -14,8 +15,8 @@ class Game3 {
     private InputParser inputParser;
     private List<String> inventory;
     private Room currentRoom;
-    private List<Room> rooms;
-    private List<Item> items;
+    private Dictionary<String, Room> rooms;
+    private Dictionary<String, Item> items;
     private List<Npc> npcs;
     private Scanner reader;
 
@@ -40,11 +41,11 @@ class Game3 {
         instance.currentRoom = newCurrentRoom;
     }
 
-    static void setRooms(List<Room> newRooms){
+    static void setRooms(Dictionary<String, Room> newRooms){
         instance.rooms = newRooms;
     }
 
-    static void setItems(List<Item> newItems){
+    static void setItems(Dictionary<String, Item> newItems){
         instance.items = newItems;
     }
 
@@ -60,11 +61,11 @@ class Game3 {
         return instance.currentRoom;
     }
 
-    static List<Room> getRooms(){
+    static Dictionary<String, Room> getRooms(){
         return instance.rooms;
     }
 
-    static List<Item> getItems(){
+    static Dictionary<String, Item> getItems(){
         return instance.items;
     }
 

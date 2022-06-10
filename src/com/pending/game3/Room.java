@@ -4,7 +4,7 @@ import java.util.Dictionary;
 import java.util.List;
 
 class Room {
-    private List<Flag> flags;
+    List<Flag> flags;
     List<String> items;
     List<String> npcs;
     Dictionary<String, String> connections;
@@ -12,11 +12,11 @@ class Room {
     String name;
     String displayName;
 
-    void takeItem(String itemToTake){
-        if (items.contains(itemToTake)){
-                Game3.getInventory().add(itemToTake);
-                items.remove(itemToTake);
-            }
+    void takeItem(String itemToTake) {
+        if (items.contains(itemToTake)) {
+            Game3.getInventory().add(itemToTake);
+            items.remove(itemToTake);
+        }
     }
 
     void look(){

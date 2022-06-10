@@ -1,5 +1,7 @@
 package com.pending.game3;
 
+import java.util.List;
+
 public class Flag {
 
     final String name;

@@ -1,5 +1,6 @@
 package com.pending.game3;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -50,6 +51,10 @@ class InputParser {
                 break;
             case QUIT:
                 return true;
+            case INFO:
+                for (SynonymDictionary synDict: SynonymDictionary.values()) {
+                    System.out.println("Command: " + synDict.name() + " valid aliases: " + synDict.synonyms);
+                }
             default:
                 System.out.println("Command not yet supported");
        }

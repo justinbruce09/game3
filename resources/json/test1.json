@@ -5,12 +5,12 @@
       "Display Name": "Examination Room",
       "Effect Tags": [
         {
-          "Tag Name": "",
-          "Tag Data": [""]
+          "Tag Name": "Tag 1",
+          "Tag Data": ["TagData 1"]
         }
       ],
-      "Description": "",
-      "Items": [""],
+      "Description": "Dummy",
+      "Items": ["Item 1"],
       "Connected Rooms": [
         {
           "Inward": "Destination"

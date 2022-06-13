@@ -23,9 +23,12 @@ class Game3 {
 
     //singleton
     private static Game3 instance;
+
     public static void runProgram() {
         if (instance == null) {
             instance = new Game3();
+            instance.inputParser = new InputParser();
+            instance.reader = new Scanner(System.in);
         }
         instance.run();
     }
@@ -78,8 +81,6 @@ class Game3 {
 
 
     private void run() {
-        inputParser = new InputParser();
-        reader = new Scanner(System.in);
         System.out.println(mainSplash);
         try (Stream<Path> stream = Files.list(Path.of(jsonDir))) {
             List<Path> files = getJsonList(stream);

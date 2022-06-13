@@ -1,13 +1,13 @@
 package com.pending.game3;
 
-import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 class Room {
     List<Flag> flags;
     List<String> items;
     List<String> npcs;
-    Dictionary<String, String> connections;
+    HashMap<String, String> connections;
     String description;
     String name;
     String displayName;

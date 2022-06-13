@@ -18,7 +18,7 @@ class Game3 {
     private Room currentRoom;
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
-    private List<Npc> npcs;
+    private HashMap<String, Npc> npcs;
     private Scanner reader;
 
     //singleton
@@ -50,7 +50,7 @@ class Game3 {
         instance.items = newItems;
     }
 
-    static void setNpcs(List<Npc> newNpcs){
+    static void setNpcs(HashMap<String, Npc> newNpcs){
         instance.npcs = newNpcs;
     }
 
@@ -70,7 +70,7 @@ class Game3 {
         return instance.items;
     }
 
-    static List<Npc> getNpcs(){
+    static HashMap<String, Npc> getNpcs(){
         return instance.npcs;
     }
 

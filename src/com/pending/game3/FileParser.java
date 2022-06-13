@@ -17,9 +17,9 @@ class FileParser {
         List<String> startingInventory;
         HashMap<String, Room> roomsAtStart;
         HashMap<String, Item> itemsAtStart;
-        List<Npc> npcsAtStart;
-        CraftingRecipe[] recipes;
-        EndCondition[] endConditions;
+        HashMap<String, Npc> npcsAtStart;
+        List<CraftingRecipe> recipes;
+        List<EndCondition> endConditions;
         private static JSONObject jsonObject;
 
         //ctor
@@ -80,9 +80,9 @@ class FileParser {
                 item.flags.add(flag);
                 item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
                 toReturn.itemsAtStart.put(item.name, item);
-                toReturn.npcsAtStart = new ArrayList<>();
-                toReturn.recipes = new CraftingRecipe[0];
-                toReturn.endConditions = new EndCondition[0];
+                toReturn.npcsAtStart = new HashMap<>();
+                toReturn.recipes = new ArrayList<>();
+                toReturn.endConditions = new ArrayList<>();
 
                 return toReturn;
         }

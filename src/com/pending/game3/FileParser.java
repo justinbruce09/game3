@@ -51,7 +51,7 @@ class FileParser {
 //                room.name = "examination room";
 //                room.displayName = "examination room";
 //                toReturn.roomsAtStart.put(room.name, room);
-                toReturn.startingRoom = "examination room";
+                toReturn.startingRoom = "Examination Room";
                 toReturn.itemsAtStart = new HashMap<>();
                 Item item = new Item();
                 item.name = "body-scanning device";

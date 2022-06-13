@@ -28,6 +28,9 @@ class InputParser {
             }
         }
         switch (command){
+            case REPLAY:
+                Game3.runProgram();
+                return true;
 //            case GO:
 //                //Check inputSplit[1] against available directions, then get that destination room
 //                //goToRoom(destination);

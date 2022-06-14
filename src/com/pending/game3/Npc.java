@@ -1,10 +1,11 @@
 package com.pending.game3;
 
+import java.util.HashMap;
 import java.util.List;
 
 class Npc {
     String name;
-    List<Flag> flags;
+    HashMap<String, List<String>> flags;
     String dialogue;
     List<String> alternativeDialogue;
 

@@ -1,9 +1,10 @@
 package com.pending.game3;
 
+import java.util.HashMap;
 import java.util.List;
 
 class Item {
     String description;
-    List<Flag> flags;
+    HashMap<String, List<String>> flags;
     String name;
 }

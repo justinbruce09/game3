@@ -10,8 +10,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Game3 {
-    public static final String jsonDir = "game3/resources/json";
-    public static final String mainSplash = "Insert Splash\nScreen Graphic\nHere!\nType \"quit\" to exit";
+    public static final String jsonDir = "resources/json";
+    public static final String mainSplash = "Insert Splash\nScreen Graphic\nHere!";
     private FileParser fileParser;
     private InputParser inputParser;
     private List<String> inventory;
@@ -82,6 +82,8 @@ class Game3 {
 
     private void run() {
         System.out.println(mainSplash);
+        if(mainMenu()) return;
+
         try (Stream<Path> stream = Files.list(Path.of(jsonDir))) {
             List<Path> files = getJsonList(stream);
             if (promptUserForFile(reader, files)) return;
@@ -95,6 +97,21 @@ class Game3 {
         currentRoom = rooms.get(fileParser.startingRoom);
         npcs = fileParser.npcsAtStart;
         mainLoop();
+    }
+
+    private boolean mainMenu() {
+        System.out.println("[1]: Start new game\n[4]: quit program");
+        while (true){
+            String input = reader.nextLine();
+            switch (input){
+                case "1":
+                    return false;
+                case "4":
+                    return true;
+            }
+            System.out.println("Invalid input, please enter the number for your menu selection.");
+
+        }
     }
 
     private void mainLoop() {

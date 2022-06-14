@@ -92,6 +92,7 @@ class FileParser {
                                 //programmer.cryALot();
                                 JSONObject roomJsonObj = (JSONObject) roomObj;
                                 Room room = new Room();
+                                room.displayName = parseString(roomJsonObj.get("Display Name"));
 
                                 room.name = parseString(roomJsonObj.get("Name"));
                                 if (room.name == null) {
@@ -141,8 +142,9 @@ class FileParser {
                                                                         System.out.println("Room " + room.name +
                                                                                 " Connection Destination.");
                                                                 return true;
-                                                        }
-                                                                room.connections.put(direction, destination);
+                                                                }
+                                                                room.connections.put(direction.toLowerCase(),
+                                                                        destination);
                                                         } else {
                                                                 System.out.println("Invalid Room " + room.name +
                                                                         " Connection Object " +

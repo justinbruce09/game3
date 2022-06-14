@@ -33,6 +33,8 @@ class FileParser {
                 if (JSONObject.class == obj.getClass()) {
                         jsonObject = (JSONObject) obj;
                         if (toReturn.parseRooms()) return null;
+                        if (toReturn.parseItems()) return null;
+                        if (toReturn.parseNpcs()) return null;
                 }
 
                 //Dummy logic for Iteration 1 MVP, will replace with actual JSON parsing in Iteration 2
@@ -53,35 +55,35 @@ class FileParser {
 //                toReturn.roomsAtStart.put(room.name, room);
                 toReturn.startingRoom = "Examination Room";
                 toReturn.itemsAtStart = new HashMap<>();
-                Item item = new Item();
-                item.name = "body-scanning device";
-                item.flags = new HashMap<>();
-                item.description = "You think this devices is intended for anatomical scanning, but it looks really" +
-                        " similar to a nightstick. You could probably bash some head with it.";
-                toReturn.itemsAtStart.put(item.name, item);
-                item = new Item();
-                item.name = "medicine";
-                item.flags = new HashMap<>();
-                item.description = "This looks like an assortment of medicines, probably shouldn't use any until " +
-                        "you find out what they do.";
-                toReturn.itemsAtStart.put(item.name, item);
-                item = new Item();
-                item.name = "key card";
-                item.flags = new HashMap<>();
-                List<String> flagData = new ArrayList<>();
-                flagData.add("Key1") ;
-                item.flags.put("Key", flagData);
-                item.description = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
-                        "shows.";
-                toReturn.itemsAtStart.put(item.name, item);
-                item = new Item();
-                item.name = "surgical instrument trolley";
-                item.flags = new HashMap<>();
-                flagData = new ArrayList<>();
-                item.flags.put("Decor", flagData);
-                item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
-                toReturn.itemsAtStart.put(item.name, item);
-                toReturn.npcsAtStart = new HashMap<>();
+//                Item item = new Item();
+//                item.name = "body-scanning device";
+//                item.flags = new HashMap<>();
+//                item.description = "You think this devices is intended for anatomical scanning, but it looks really" +
+//                        " similar to a nightstick. You could probably bash some head with it.";
+//                toReturn.itemsAtStart.put(item.name, item);
+//                item = new Item();
+//                item.name = "medicine";
+//                item.flags = new HashMap<>();
+//                item.description = "This looks like an assortment of medicines, probably shouldn't use any until " +
+//                        "you find out what they do.";
+//                toReturn.itemsAtStart.put(item.name, item);
+//                item = new Item();
+//                item.name = "key card";
+//                item.flags = new HashMap<>();
+//                List<String> flagData = new ArrayList<>();
+//                flagData.add("Key1") ;
+//                item.flags.put("Key", flagData);
+//                item.description = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
+//                        "shows.";
+//                toReturn.itemsAtStart.put(item.name, item);
+//                item = new Item();
+//                item.name = "surgical instrument trolley";
+//                item.flags = new HashMap<>();
+//                flagData = new ArrayList<>();
+//                item.flags.put("Decor", flagData);
+//                item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
+//                toReturn.itemsAtStart.put(item.name, item);
+//                toReturn.npcsAtStart = new HashMap<>();
                 toReturn.recipes = new ArrayList<>();
                 toReturn.endConditions = new ArrayList<>();
 
@@ -240,11 +242,11 @@ class FileParser {
                 return toReturn;
         }
         private boolean parseItems(){
-                HashMap<String, Item> itemsAtStart = new HashMap<>();
+                itemsAtStart = new HashMap<>();
                 Object obj= jsonObject.get("Items");
-                if(JSONArray.class == obj.getClass()); //if the item in the array = obj
-                JSONArray jsonItems = (JSONArray) obj;  // downcast the item to a JSON simple obj
-                        for(Object itemObj : jsonItems){ // for each item in jsonItems (JSON simple obj)
+                if(JSONArray.class.equals(obj.getClass())) { //if the item in the array = obj
+                        JSONArray jsonItems = (JSONArray) obj;  // downcast the item to a JSON simple obj
+                        for (Object itemObj : jsonItems) { // for each item in jsonItems (JSON simple obj)
                                 JSONObject itemJsonObj = (JSONObject) itemObj; //set itemJsonObj = JSON simple Obj
                                 Item item = new Item(); // this item can now be made a new item in Items
 
@@ -266,10 +268,53 @@ class FileParser {
                                         } else return true;
                                 } else item.flags = new HashMap<>();
 
-                        item.description = parseString(itemJsonObj.get("Description")); // set item.description to parsed JSON simple object
+                                item.description = parseString(itemJsonObj.get("Description")); // set item.description to parsed JSON simple object
                                 if (item.description == null) {   // if item description is null
-                                System.out.println("Item " + item.name + " Description.");
-                                return true;
+                                        System.out.println("Item " + item.name + " Description.");
+                                        return true;
+                                }
+                        itemsAtStart.put(item.name, item);
+                        }
+                }
+                return false;
+        }
+        private boolean parseNpcs() {
+                npcsAtStart = new HashMap<>();
+                Object obj = jsonObject.get("NPCs");
+                if (JSONArray.class.equals(obj.getClass())) {
+                        JSONArray jsonNpcs = (JSONArray) obj;
+                        for (Object npcObj : jsonNpcs) {
+                                JSONObject npcJsonObj = (JSONObject) npcObj;
+                                Npc npc = new Npc();
+
+                                npc.name = parseString(npcJsonObj.get("Name"));
+                                if (npc.name == null) {
+                                        System.out.println("NPC Name");
+                                        return true;
+                                }
+                                if (npcJsonObj.keySet().contains("Effect Tags")) { //if npcsJson object keys (from map) contain effect tags
+                                        obj = npcJsonObj.get("Effect Tags"); // set obj variable = to the effect tag
+                                        if (JSONArray.class.equals(obj.getClass())) { // if JSON simple class obj = obj class
+                                                JSONArray flagsJson = (JSONArray) obj; //set flagsjson = obj
+                                                npc.flags = parseFlags(flagsJson); // set item.flags equal to parsed version of flags
+                                                if (npc.flags == null) {  // if the item flag is null
+                                                        System.out.println(npc.name + " Effect Tags."); // print out item name concat effect tag
+                                                        return true; // exits parsing
+                                                }
+                                        } else return true;
+                                } else npc.flags = new HashMap<>();
+                                npc.dialogue = parseString(npcJsonObj.get("Dialogue")); // set npc.dialogue to parsed JSON simple object
+                                if (npc.dialogue == null) {   // if npc dialogue is null
+                                        System.out.println("NPC " + npc.name + " Dialogue.");
+                                        return true;
+                                }
+
+                                npc.alternativeDialogue = parseStringList(npcJsonObj.get("Alternate Dialogue")); // set to parsed JSON simple object
+                                if (npc.alternativeDialogue == null) {   // if npc  alt. dialogue is null
+                                        System.out.println("NPC " + npc.name + " Alternate Dialogue.");
+                                        return true;
+                                }
+                        npcsAtStart.put(npc.name, npc);
                         }
                 }
                 return false;

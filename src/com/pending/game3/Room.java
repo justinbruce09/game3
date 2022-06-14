@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 class Room {
-    List<Flag> flags;
+    HashMap<String, List<String>> flags;
     List<String> items;
     List<String> npcs;
     HashMap<String, String> connections;

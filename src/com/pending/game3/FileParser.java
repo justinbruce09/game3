@@ -53,33 +53,27 @@ class FileParser {
 //                toReturn.roomsAtStart.put(room.name, room);
                 toReturn.startingRoom = "Examination Room";
                 toReturn.itemsAtStart = new HashMap<>();
-                Item item = new Item();
-                item.name = "body-scanning device";
-                item.flags = new HashMap<>();
-                item.description = "You think this devices is intended for anatomical scanning, but it looks really" +
-                        " similar to a nightstick. You could probably bash some head with it.";
+                String descriptionText = "You think this devices is intended for anatomical scanning, but it looks " +
+                        "really similar to a nightstick. You could probably bash some head with it.";
+                Item item = new Item("body-scanning device", descriptionText, new HashMap<>());
                 toReturn.itemsAtStart.put(item.name, item);
-                item = new Item();
-                item.name = "medicine";
-                item.flags = new HashMap<>();
-                item.description = "This looks like an assortment of medicines, probably shouldn't use any until " +
+                descriptionText = "This looks like an assortment of medicines, probably shouldn't use any until " +
                         "you find out what they do.";
+                item = new Item("medicine", descriptionText, new HashMap<>());
                 toReturn.itemsAtStart.put(item.name, item);
-                item = new Item();
-                item.name = "key card";
-                item.flags = new HashMap<>();
                 List<String> flagData = new ArrayList<>();
                 flagData.add("Key1") ;
-                item.flags.put("Key", flagData);
-                item.description = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
+                HashMap<String, List<String>> flags = new HashMap<>();
+                flags.put("Key", flagData);
+                descriptionText = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
                         "shows.";
+                item = new Item("key card", descriptionText, flags);
                 toReturn.itemsAtStart.put(item.name, item);
-                item = new Item();
-                item.name = "surgical instrument trolley";
-                item.flags = new HashMap<>();
+                descriptionText = "A trolley that looks like it should have an assortment of surgical tools on it.";
+                flags = new HashMap<>();
                 flagData = new ArrayList<>();
-                item.flags.put("Decor", flagData);
-                item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
+                flags.put("Decor", flagData);
+                item = new Item("surgical instrument trolley", descriptionText, flags);
                 toReturn.itemsAtStart.put(item.name, item);
                 toReturn.npcsAtStart = new HashMap<>();
                 toReturn.recipes = new ArrayList<>();
@@ -246,11 +240,10 @@ class FileParser {
                 JSONArray jsonItems = (JSONArray) obj;  // downcast the item to a JSON simple obj
                         for(Object itemObj : jsonItems){ // for each item in jsonItems (JSON simple obj)
                                 JSONObject itemJsonObj = (JSONObject) itemObj; //set itemJsonObj = JSON simple Obj
-                                Item item = new Item(); // this item can now be made a new item in Items
 
-
-                                item.name = parseString(itemJsonObj.get("Name"));// item.name equals the parsed JSON simple item name
-                                if (item.name == null) {    // if the item name is null print
+                                HashMap<String, List<String>> flags = new HashMap<>();
+                                String name = parseString(itemJsonObj.get("Name"));// item.name equals the parsed JSON simple item name
+                                if (name == null) {    // if the item name is null print
                                         System.out.println("Item Name."); // print item name
                                         return true; //exits parsing method
                                 }
@@ -258,17 +251,17 @@ class FileParser {
                                         obj = itemJsonObj.get("Effect Tags"); // set obj variable = to the effect tag
                                         if (JSONArray.class.equals(obj.getClass())) { // if JSON simple class obj = obj class
                                                 JSONArray flagsJson = (JSONArray) obj; //set flagsjson = obj
-                                                item.flags = parseFlags(flagsJson); // set item.flags equal to parsed version of flags
-                                                if (item.flags == null) {  // if the item flag is null
-                                                        System.out.println(item.name + " Effect Tags."); // print out item name concat effect tag
+                                                flags = parseFlags(flagsJson); // set item.flags equal to parsed version of flags
+                                                if (flags == null) {  // if the item flag is null
+                                                        System.out.println(name + " Effect Tags."); // print out item name concat effect tag
                                                         return true; // exits parsing
                                                 }
                                         } else return true;
-                                } else item.flags = new HashMap<>();
-
-                        item.description = parseString(itemJsonObj.get("Description")); // set item.description to parsed JSON simple object
+                                }
+                                String description = parseString(itemJsonObj.get("Description")); // set item.description to parsed JSON simple object
+                                Item item = new Item(name, description, flags); // this item can now be made a new item in Items
                                 if (item.description == null) {   // if item description is null
-                                System.out.println("Item " + item.name + " Description.");
+                                        System.out.println("Item " + item.name + " Description.");
                                 return true;
                         }
                 }

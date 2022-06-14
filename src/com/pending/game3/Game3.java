@@ -23,7 +23,7 @@ class Game3 {
 
     //singleton
     private static Game3 instance;
-
+    // logic for running a new instance of a game
     public static void runProgram() {
         if (instance == null) {
             instance = new Game3();
@@ -79,9 +79,9 @@ class Game3 {
 
 
 
-
+    //method for starting the game
     private void run() {
-        System.out.println(mainSplash);
+        System.out.println(mainSplash);//splash screen
         if(mainMenu()) return;
 
         try (Stream<Path> stream = Files.list(Path.of(jsonDir))) {
@@ -98,7 +98,7 @@ class Game3 {
         npcs = fileParser.npcsAtStart;
         mainLoop();
     }
-
+    // method to run the main menu
     private boolean mainMenu() {
         System.out.println("[1]: Start new game\n[4]: quit program");
         while (true){
@@ -113,7 +113,7 @@ class Game3 {
 
         }
     }
-
+    //method that handles the game logic of taking in a command and displaying a room
     private void mainLoop() {
         while (true) {
             displayRoom();
@@ -122,13 +122,13 @@ class Game3 {
             }
         }
     }
-
+    // method that show the user the current room, items in the room, and their inventory
     private void displayRoom() {
         System.out.println(getCurrentRoom().description);
         System.out.println("Items: " + getCurrentRoom().items);
         System.out.println("Inventory: " + getInventory());
     }
-
+    // method to prompt user to load JSON file
     private boolean promptUserForFile(Scanner reader, List<Path> files) {
 
         // Dummy code for Iteration 1, delete when ready to uncomment real code below
@@ -154,13 +154,13 @@ class Game3 {
             }
         }
     }
-
+    // displays file names
     private void printFiles(List<Path> files) {
         for (int i = 0; i < files.size(); i++){
             System.out.println("[" + (1 + i) + "]: " + files.get(i).getFileName());
         }
     }
-
+    // gets JSON files from the list
     private List<Path> getJsonList(Stream<Path> stream) {
         return stream.filter(file -> (!Files.isDirectory(file))
                 && file.getFileName().toString().contains(".json"))

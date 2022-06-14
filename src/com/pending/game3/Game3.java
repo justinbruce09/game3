@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Game3 {
-    public static final String jsonDir = "resources/json";
+    public static final String jsonDir = "game3/resources/json";
     public static final String mainSplash = "Insert Splash\nScreen Graphic\nHere!\nType \"quit\" to exit";
     private FileParser fileParser;
     private InputParser inputParser;

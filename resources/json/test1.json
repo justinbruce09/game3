@@ -13,7 +13,18 @@
       "Items": ["Item 1"],
       "Connected Rooms": [
         {
-          "Inward": "Destination"
+          "Outward": "Hallway1"
+        }
+      ]
+    },
+    {
+      "Name": "Hallway1",
+      "Display Name": "Hallway",
+      "Description": "An empty hallway",
+      "Items": ["Item 1"],
+      "Connected Rooms": [
+        {
+          "Inward": "Examination Room"
         }
       ]
     }

@@ -55,32 +55,30 @@ class FileParser {
                 toReturn.itemsAtStart = new HashMap<>();
                 Item item = new Item();
                 item.name = "body-scanning device";
-                item.flags = new ArrayList<>();
+                item.flags = new HashMap<>();
                 item.description = "You think this devices is intended for anatomical scanning, but it looks really" +
                         " similar to a nightstick. You could probably bash some head with it.";
                 toReturn.itemsAtStart.put(item.name, item);
                 item = new Item();
                 item.name = "medicine";
-                item.flags = new ArrayList<>();
+                item.flags = new HashMap<>();
                 item.description = "This looks like an assortment of medicines, probably shouldn't use any until " +
                         "you find out what they do.";
                 toReturn.itemsAtStart.put(item.name, item);
                 item = new Item();
                 item.name = "key card";
-                item.flags = new ArrayList<>();
+                item.flags = new HashMap<>();
                 List<String> flagData = new ArrayList<>();
                 flagData.add("Key1") ;
-                Flag flag = new Flag("Key", flagData);
-                item.flags.add(flag);
+                item.flags.put("Key", flagData);
                 item.description = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
                         "shows.";
                 toReturn.itemsAtStart.put(item.name, item);
                 item = new Item();
                 item.name = "surgical instrument trolley";
-                item.flags = new ArrayList<>();
+                item.flags = new HashMap<>();
                 flagData = new ArrayList<>();
-                flag = new Flag("Decor", flagData);
-                item.flags.add(flag);
+                item.flags.put("Decor", flagData);
                 item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
                 toReturn.itemsAtStart.put(item.name, item);
                 toReturn.npcsAtStart = new HashMap<>();
@@ -117,7 +115,7 @@ class FileParser {
                                                         return true;
                                                 }
                                         } else return true;
-                                } else room.flags = new ArrayList<>();
+                                } else room.flags = new HashMap<>();
 
                                 if (roomJsonObj.keySet().contains("Items")) {
                                         room.items = parseStringList(roomJsonObj.get("Items"));
@@ -193,8 +191,8 @@ class FileParser {
                 }
         }
 
-        private List<Flag> parseFlags(JSONArray flagsJson) {
-                List<Flag> toReturn = new ArrayList<>();
+        private HashMap<String, List<String>> parseFlags(JSONArray flagsJson) {
+                HashMap<String, List<String>> toReturn = new HashMap<>();
                 if (flagsJson == null) {
                         System.out.print("Null when Flags were expected at: ");
                         return null;
@@ -212,6 +210,7 @@ class FileParser {
                                         System.out.print("Tag Data in: ");
                                         return null;
                                 }
+                                toReturn.put(name, dataList);
 
                         } else return null;
                 }
@@ -265,13 +264,14 @@ class FileParser {
                                                         return true; // exits parsing
                                                 }
                                         } else return true;
-                                } else item.flags = new ArrayList<>();
+                                } else item.flags = new HashMap<>();
 
                         item.description = parseString(itemJsonObj.get("Description")); // set item.description to parsed JSON simple object
                                 if (item.description == null) {   // if item description is null
                                 System.out.println("Item " + item.name + " Description.");
                                 return true;
                         }
-
+                }
+                return false;
         }
 }

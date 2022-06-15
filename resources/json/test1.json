@@ -21,7 +21,7 @@
       "Name": "Hallway1",
       "Display Name": "Hallway",
       "Description": "An empty hallway",
-      "Items": ["Item 1"],
+      "Items": ["Item 2"],
       "Connected Rooms": [
         {
           "Inward": "Examination Room"
@@ -38,7 +38,17 @@
           "Tag Data": [""]
         }
       ],
-      "Description": ""
+      "Description": "An Item"
+    },
+    {
+      "Name": "Item 1",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "Another Item"
     }
   ],
   "NPCs": [

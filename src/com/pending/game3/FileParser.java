@@ -55,7 +55,7 @@ class FileParser {
 //                room.name = "examination room";
 //                room.displayName = "examination room";
 //                toReturn.roomsAtStart.put(room.name, room);
-                toReturn.startingRoom = "Examination Room";
+                toReturn.startingRoom = "examination room";
 //                toReturn.itemsAtStart = new HashMap<>();
 //                Item item = new Item();
 //                item.name = "body-scanning device";
@@ -127,6 +127,10 @@ class FileParser {
                                                 System.out.println("Room " + name + " Items.");
                                                 return true;
                                         }
+                                        for (int i = 0; i < items.size(); i++){
+                                                items.add(items.get(i).toLowerCase());
+                                                items.remove(items.get(i));
+                                        }
                                 } else items = new ArrayList<>();
 
                                 HashMap<String, String> connections;
@@ -147,7 +151,7 @@ class FileParser {
                                                                         return true;
                                                                 }
                                                                 obj = connection.get(direction);
-                                                                String destination = parseString(obj);
+                                                                String destination = parseString(obj).toLowerCase();
                                                                 if (destination == null) {
                                                                         System.out.println("Room " + name +
                                                                                 " Connection Destination.");
@@ -185,7 +189,7 @@ class FileParser {
                                 }else npcs = new ArrayList<>();
 
                                 Room room = new Room(flags, items, npcs, connections, description, name, displayName);
-                                roomsAtStart.put(room.name, room);
+                                roomsAtStart.put(room.name.toLowerCase(), room);
 
                         }
                 }

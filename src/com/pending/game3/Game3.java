@@ -10,8 +10,14 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Game3 {
-    public static final String jsonDir = "resources/json";
-    public static final String mainSplash = "Insert Splash\nScreen Graphic\nHere!";
+    public static final String jsonDir = "game3/resources/json";
+    public static final String mainSplash = "So, you want to play an adventure game?\n" +
+            "Too bad, this is just an engine for adventure games.\n" +
+            "After selecting New Game, you will be prompted to choose a .json file to load the game from.\n" +
+            "Yes, you read that correctly: This engine can read in the entire game from a .json file, so you and " +
+            "your friends can modify or even create new game worlds to play in this engine.\n" +
+            "The sky is the limit!\n\n\n\n" +
+            "Or is it?";
     private FileParser fileParser;
     private InputParser inputParser;
     private List<String> inventory;
@@ -127,6 +133,10 @@ class Game3 {
         System.out.println(getCurrentRoom().description);
         System.out.println("Items: " + getCurrentRoom().items);
         System.out.println("Inventory: " + getInventory());
+        System.out.print("Movement options: ");
+        for(String direction : currentRoom.connections.keySet()) {
+            System.out.print("\"" + direction + "\" ");
+        }
     }
     // method to prompt user to load JSON file
     private boolean promptUserForFile(Scanner reader, List<Path> files) {

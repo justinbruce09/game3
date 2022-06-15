@@ -133,7 +133,7 @@ class Game3 {
         System.out.println("Items: " + getCurrentRoom().getItems());
         System.out.println("Inventory: " + getInventory());
         System.out.print("Movement options: ");
-        for(String direction : currentRoom.connections.keySet()) {
+        for(String direction : currentRoom.getConnections().keySet()) {
             System.out.print("\"" + direction + "\" ");
         }
     }

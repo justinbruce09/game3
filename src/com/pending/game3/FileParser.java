@@ -291,35 +291,37 @@ class FileParser {
                         JSONArray jsonNpcs = (JSONArray) obj;
                         for (Object npcObj : jsonNpcs) {
                                 JSONObject npcJsonObj = (JSONObject) npcObj;
-                                Npc npc = new Npc();
 
-                                npc.name = parseString(npcJsonObj.get("Name"));
-                                if (npc.name == null) {
+                                String name = parseString(npcJsonObj.get("Name"));
+                                if (name == null) {
                                         System.out.println("NPC Name");
                                         return true;
                                 }
+                                HashMap<String, List<String>> flags;
                                 if (npcJsonObj.keySet().contains("Effect Tags")) { //if npcsJson object keys (from map) contain effect tags
                                         obj = npcJsonObj.get("Effect Tags"); // set obj variable = to the effect tag
                                         if (JSONArray.class.equals(obj.getClass())) { // if JSON simple class obj = obj class
                                                 JSONArray flagsJson = (JSONArray) obj; //set flagsjson = obj
-                                                npc.flags = parseFlags(flagsJson); // set item.flags equal to parsed version of flags
-                                                if (npc.flags == null) {  // if the item flag is null
-                                                        System.out.println(npc.name + " Effect Tags."); // print out item name concat effect tag
+                                                flags = parseFlags(flagsJson); // set item.flags equal to parsed version of flags
+                                                if (flags == null) {  // if the item flag is null
+                                                        System.out.println(name + " Effect Tags."); // print out item name concat effect tag
                                                         return true; // exits parsing
                                                 }
                                         } else return true;
-                                } else npc.flags = new HashMap<>();
-                                npc.dialogue = parseString(npcJsonObj.get("Dialogue")); // set npc.dialogue to parsed JSON simple object
-                                if (npc.dialogue == null) {   // if npc dialogue is null
-                                        System.out.println("NPC " + npc.name + " Dialogue.");
+                                } else flags = new HashMap<>();
+                                String dialogue = parseString(npcJsonObj.get("Dialogue")); // set npc.dialogue to parsed JSON simple object
+                                if (dialogue == null) {   // if npc dialogue is null
+                                        System.out.println("NPC " + name + " Dialogue.");
                                         return true;
                                 }
 
-                                npc.alternativeDialogue = parseStringList(npcJsonObj.get("Alternate Dialogue")); // set to parsed JSON simple object
-                                if (npc.alternativeDialogue == null) {   // if npc  alt. dialogue is null
-                                        System.out.println("NPC " + npc.name + " Alternate Dialogue.");
+                                List<String> alternativeDialogue =
+                                        parseStringList(npcJsonObj.get("Alternate Dialogue")); // set to parsed JSON simple object
+                                if (alternativeDialogue == null) {   // if npc  alt. dialogue is null
+                                        System.out.println("NPC " + name + " Alternate Dialogue.");
                                         return true;
                                 }
+                        Npc npc = new Npc(name, dialogue, flags, alternativeDialogue);
                         npcsAtStart.put(npc.name, npc);
                         }
                 }

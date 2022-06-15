@@ -35,6 +35,8 @@ class FileParser {
                         if (toReturn.parseRooms()) return null;
                         if (toReturn.parseItems()) return null;
                         if (toReturn.parseNpcs()) return null;
+                        if (toReturn.parseCraftingRecipes()) return null;
+                        if (toReturn.parseEndCondition()) return null;
                 }
 
                 //Dummy logic for Iteration 1 MVP, will replace with actual JSON parsing in Iteration 2
@@ -84,8 +86,8 @@ class FileParser {
 //                item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
 //                toReturn.itemsAtStart.put(item.name, item);
 //                toReturn.npcsAtStart = new HashMap<>();
-                toReturn.recipes = new ArrayList<>();
-                toReturn.endConditions = new ArrayList<>();
+//                toReturn.recipes = new ArrayList<>();
+//                toReturn.endConditions = new ArrayList<>();
 
                 return toReturn;
         }
@@ -173,11 +175,15 @@ class FileParser {
                                         System.out.println("Room " + name + " Description.");
                                         return true;
                                 }
-                                List<String> npcs = parseStringList(roomJsonObj.get("Npcs"));
-                                if (npcs == null) {
-                                        System.out.println("Room " + name + " Npcs.");
-                                        return true;
-                                }
+                                List<String> npcs ;
+                                if(roomJsonObj.containsKey("Npcs")) {
+                                        npcs = parseStringList(roomJsonObj.get("Npcs"));
+                                        if (npcs == null) {
+                                                System.out.println("Room " + name + " Npcs.");
+                                                return true;
+                                        }
+                                }else npcs = new ArrayList<>();
+
                                 Room room = new Room(flags, items, npcs, connections, description, name, displayName);
                                 roomsAtStart.put(room.name, room);
 
@@ -326,5 +332,94 @@ class FileParser {
                         }
                 }
                 return false;
+        }
+        private boolean parseCraftingRecipes(){
+                recipes = new ArrayList<>();
+                Object obj = jsonObject.get("Crafting Recipes");
+                if(JSONArray.class.equals(obj.getClass())){
+                        JSONArray jsonCraftingRecipes = (JSONArray) obj;
+                        for(Object craftingRecipeObj : jsonCraftingRecipes){
+                                JSONObject craftingRecipeJsonObj = (JSONObject) craftingRecipeObj;
+                                CraftingRecipe craftingRecipe = new CraftingRecipe();
+
+                                craftingRecipe.result = parseString(craftingRecipeJsonObj.get("Result"));
+                                if (craftingRecipe.result == null) {
+                                        System.out.println("Crafting Recipe Result.");
+                                        return true;
+                                }
+                                craftingRecipe.ingredients = parseStringList(craftingRecipeJsonObj.get("Ingredients"));
+                                if(craftingRecipe.ingredients == null) {
+                                        System.out.println("Crafting Recipe Ingredients");
+                                }
+                        }
+                }return false;
+        }
+        private boolean parseEndCondition(){
+                endConditions = new ArrayList<>();
+                Object obj = jsonObject.get("End Conditions");
+                if(JSONArray.class.equals(obj.getClass())){
+                        JSONArray jsonEndConditions = (JSONArray) obj;
+                        for(Object endConditionsObj : jsonEndConditions){
+                                JSONObject endConditionsJsonObj = (JSONObject) endConditionsObj;
+                                EndCondition endCondition = new EndCondition();
+                                if(endConditionsJsonObj.containsKey("Room Requirement")) {
+
+                                        endCondition.roomReq = parseString(endConditionsJsonObj.get("Room Requirement"));
+                                        if (endCondition.roomReq == null) {
+                                                System.out.println("End Condition Room Requirement.");
+                                                return true;
+                                        }
+                                }
+                                if(endConditionsJsonObj.containsKey("Item Requirements")) {
+                                        endCondition.itemReq = parseStringList(endConditionsJsonObj.get("Item Requirements"));
+                                        if (endCondition.itemReq == null) {
+                                                System.out.println("End Condition Item Requirements");
+                                        }
+                                }
+                                if(endConditionsJsonObj.containsKey("NPC Status Requirements")){
+                                        endCondition.npcReq = new ArrayList<>();
+                                        obj = endConditionsJsonObj.get("NPC Status Requirements");
+                                        if(obj.getClass().equals(JSONArray.class)) {
+                                                JSONArray jsonNpcs = (JSONArray) obj;
+                                                for (Object npcObj : jsonNpcs) {
+                                                        JSONObject npcJsonObj = (JSONObject) npcObj;
+
+                                                        String name = parseString(npcJsonObj.get("Name"));
+                                                        if (name == null) {
+                                                                System.out.println("NPC Name");
+                                                                return true;
+                                                        }
+                                                        HashMap<String, List<String>> flags;
+                                                        if (npcJsonObj.keySet().contains("Effect Tags")) { //if npcsJson object keys (from map) contain effect tags
+                                                                obj = npcJsonObj.get("Effect Tags"); // set obj variable = to the effect tag
+                                                                if (JSONArray.class.equals(obj.getClass())) { // if JSON simple class obj = obj class
+                                                                        JSONArray flagsJson = (JSONArray) obj; //set flagsjson = obj
+                                                                        flags = parseFlags(flagsJson); // set item.flags equal to parsed version of flags
+                                                                        if (flags == null) {  // if the item flag is null
+                                                                                System.out.println(name + " Effect Tags."); // print out item name concat effect tag
+                                                                                return true; // exits parsing
+                                                                        }
+                                                                } else return true;
+                                                        } else flags = new HashMap<>();
+                                                        String dialogue = parseString(npcJsonObj.get("Dialogue")); // set npc.dialogue to parsed JSON simple object
+                                                        if (dialogue == null) {   // if npc dialogue is null
+                                                                System.out.println("NPC " + name + " Dialogue.");
+                                                                return true;
+                                                        }
+
+                                                        List<String> alternativeDialogue =
+                                                                parseStringList(npcJsonObj.get("Alternate Dialogue")); // set to parsed JSON simple object
+                                                        if (alternativeDialogue == null) {   // if npc  alt. dialogue is null
+                                                                System.out.println("NPC " + name + " Alternate Dialogue.");
+                                                                return true;
+                                                        }
+                                                        Npc npc = new Npc(name, dialogue, flags, alternativeDialogue);
+                                                        endCondition.npcReq.add(npc);
+                                                }
+                                        }
+                                }
+                        endConditions.add(endCondition);
+                        }
+                }return false;
         }
 }

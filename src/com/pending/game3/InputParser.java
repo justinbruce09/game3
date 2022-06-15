@@ -39,7 +39,7 @@ class InputParser {
                 Game3.runProgram();
                 return true;
             case GO:
-                HashMap<String,  String> connectionsMap = Game3.getCurrentRoom().connections;
+                HashMap<String,  String> connectionsMap = Game3.getCurrentRoom().getConnections();
                 if (connectionsMap.containsKey(inputSplit[1])) {
                     goToRoom(connectionsMap.get(inputSplit[1]));
                 } else {
@@ -49,14 +49,14 @@ class InputParser {
             case INSPECT:
                 if("room".equalsIgnoreCase(inputSplit[1])){
                 System.out.println(Game3.getCurrentRoom().description);
-                } else if (Game3.getCurrentRoom().items.contains(inputSplit[1])) {
+                } else if (Game3.getCurrentRoom().getItems().contains(inputSplit[1])) {
                         System.out.println(Game3.getItems().get(inputSplit[1]).description);
                     } else {
                         System.out.println("Item does not exist");
                     }
                 break;
             case TAKE:
-                    if (Game3.getCurrentRoom().items.contains(inputSplit[1])) {
+                    if (Game3.getCurrentRoom().getItems().contains(inputSplit[1])) {
                     Game3.getCurrentRoom().takeItem(inputSplit[1]);
                     }
                 break;
@@ -75,12 +75,12 @@ class InputParser {
     private void goToRoom(String destination) {
         if (Game3.getRooms().containsKey(destination)) {
             Room destinationRoom = Game3.getRooms().get(destination);
-            if (destinationRoom.flags.containsKey("Locked")) {
+            if (destinationRoom.getFlags().containsKey("Locked")) {
                 //get the lock and check inventory for matching key
-                List<String> keyData = destinationRoom.flags.get("Locked");
+                List<String> keyData = destinationRoom.getFlags().get("Locked");
                 if (keyData.size() > 0){
                     if(keyCheck(keyData.get(0))){
-                        destinationRoom.flags.remove("Locked");
+                        destinationRoom.editFlags().remove("Locked");
                         Game3.setCurrentRoom(destinationRoom);
                     } else {
                         System.out.println("The door is locked.");

@@ -136,18 +136,11 @@ class Game3 {
         for(String direction : currentRoom.getConnections().keySet()) {
             System.out.print("\"" + direction + "\" ");
         }
+        System.out.println();
     }
     // method to prompt user to load JSON file
     private boolean promptUserForFile(Scanner reader, List<Path> files) {
 
-        // Dummy code for Iteration 1, delete when ready to uncomment real code below
-//        try {
-//            fileParser = FileParser.loadFile(Path.of(jsonDir));
-//        } catch (Exception e) {
-//            System.out.println("FileParser error");
-//        }
-
-        //Real code for files, uncomment when ready
         while (true){
             printFiles(files);
             System.out.print("Enter a number to select a json file to load: ");

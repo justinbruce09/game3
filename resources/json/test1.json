@@ -70,14 +70,26 @@
   },
   "Crafting Recipes": {
     "Result Item": "",
-    "Recipe": [""]
+    "Ingredients": [""]
   },
   "End Conditions": [
     {
       "Win": true,
       "Room Requirement": "",
       "Item Requirements": [""],
-      "NPC Status Requirements": [""]
+      "NPC Status Requirements": [
+        {
+          "Name": "",
+          "Effect Tags": [
+            {
+              "Tag Name": "",
+              "Tag Data": [""]
+            }
+          ],
+          "Dialogue": "",
+          "Alternate Dialogue": [""]
+        }
+      ]
     }
   ]
 }

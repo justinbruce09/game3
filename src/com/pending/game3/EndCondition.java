@@ -4,8 +4,8 @@ import java.util.List;
 
 class EndCondition {
     boolean win;
-    Room roomReq;
-    List<Item> itemReq;
+    String roomReq;
+    List<String> itemReq;
     List<Npc> npcReq;
 
     void check(){

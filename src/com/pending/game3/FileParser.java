@@ -91,38 +91,38 @@ class FileParser {
                                 //programmer.tryNotToCry();
                                 //programmer.cryALot();
                                 JSONObject roomJsonObj = (JSONObject) roomObj;
-                                Room room = new Room();
-                                room.displayName = parseString(roomJsonObj.get("Display Name"));
+                                String displayName = parseString(roomJsonObj.get("Display Name"));
 
-                                room.name = parseString(roomJsonObj.get("Name"));
-                                if (room.name == null) {
+                                String name = parseString(roomJsonObj.get("Name"));
+                                if (name == null) {
                                         System.out.println("Room Name.");
                                         return true;
                                 }
-
+                                HashMap<String, List<String>> flags;
                                 if (roomJsonObj.keySet().contains("Effect Tags")) {
                                         obj = roomJsonObj.get("Effect Tags");
                                         if (JSONArray.class.equals(obj.getClass())) {
                                                 JSONArray flagsJson = (JSONArray) obj;
-                                                room.flags = parseFlags(flagsJson);
-                                                if (room.flags == null) {
-                                                        System.out.println(room.name + " Effect Tags.");
+                                                flags = parseFlags(flagsJson);
+                                                if (flags == null) {
+                                                        System.out.println(name + " Effect Tags.");
                                                         return true;
                                                 }
                                         } else return true;
-                                } else room.flags = new HashMap<>();
-
+                                } else flags = new HashMap<>();
+                                List<String> items;
                                 if (roomJsonObj.keySet().contains("Items")) {
-                                        room.items = parseStringList(roomJsonObj.get("Items"));
-                                        if (room.items == null) {
-                                                System.out.println("Room " + room.name + " Items.");
+                                        items = parseStringList(roomJsonObj.get("Items"));
+                                        if (items == null) {
+                                                System.out.println("Room " + name + " Items.");
                                                 return true;
                                         }
-                                } else room.items = new ArrayList<>();
+                                } else items = new ArrayList<>();
 
+                                HashMap<String, String> connections;
                                 //parse connected rooms
                                 obj = roomJsonObj.get("Connected Rooms");
-                                room.connections = new HashMap<>();
+                                connections = new HashMap<>();
                                 if(JSONArray.class.equals(obj.getClass())){
                                         JSONArray connectionArray = (JSONArray)obj;
                                         for (Object derp : connectionArray) {
@@ -132,21 +132,21 @@ class FileParser {
                                                                 obj = connection.keySet().toArray()[0];
                                                                 String direction = parseString(obj);
                                                                 if (direction == null){
-                                                                        System.out.println("Room " + room.name +
+                                                                        System.out.println("Room " + name +
                                                                                 " Connection Direction.");
                                                                         return true;
                                                                 }
                                                                 obj = connection.get(direction);
                                                                 String destination = parseString(obj);
                                                                 if (destination == null) {
-                                                                        System.out.println("Room " + room.name +
+                                                                        System.out.println("Room " + name +
                                                                                 " Connection Destination.");
                                                                 return true;
                                                                 }
-                                                                room.connections.put(direction.toLowerCase(),
+                                                                connections.put(direction.toLowerCase(),
                                                                         destination);
                                                         } else {
-                                                                System.out.println("Invalid Room " + room.name +
+                                                                System.out.println("Invalid Room " + name +
                                                                         " Connection Object " +
                                                                         "Size, each direction:destination pair must " +
                                                                         "be a separate object and cannot be empty.");
@@ -154,18 +154,23 @@ class FileParser {
                                                         }
                                                 } else {
                                                         System.out.println("Invalid Data Type when Object was " +
-                                                                "expected at Room " + room.name + " Connections");
+                                                                "expected at Room " + name + " Connections");
                                                         return true;
                                                 }
                                         }
                                 }
 
-                                room.description = parseString(roomJsonObj.get("Description"));
-                                if (room.description == null) {
-                                        System.out.println("Room " + room.name + " Description.");
+                                String description = parseString(roomJsonObj.get("Description"));
+                                if (description == null) {
+                                        System.out.println("Room " + name + " Description.");
                                         return true;
                                 }
-
+                                List<String> npcs = parseStringList(roomJsonObj.get("Npcs"));
+                                if (npcs == null) {
+                                        System.out.println("Room " + name + " Npcs.");
+                                        return true;
+                                }
+                                Room room = new Room(flags, items, npcs, connections, description, name, displayName);
                                 roomsAtStart.put(room.name, room);
 
                         }

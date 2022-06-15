@@ -2,7 +2,6 @@ package com.pending.game3;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.security.spec.ECField;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -125,7 +124,7 @@ class Game3 {
     // method that show the user the current room, items in the room, and their inventory
     private void displayRoom() {
         System.out.println(getCurrentRoom().description);
-        System.out.println("Items: " + getCurrentRoom().items);
+        System.out.println("Items: " + getCurrentRoom().getItems());
         System.out.println("Inventory: " + getInventory());
     }
     // method to prompt user to load JSON file

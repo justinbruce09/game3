@@ -152,6 +152,7 @@ class Game3 {
                 if(fileParser == null) return true;
                 else return false;
             } catch (Exception e) {
+                System.out.println(e);
                 System.out.println("Invalid input, please try again.");
             }
         }

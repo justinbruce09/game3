@@ -68,6 +68,7 @@
   "Starting Inventory": [""],
   "Intro Text": [""],
   "Synonym Dictionary": {
+
     "Info": ["help", "status", "check"],
     "Go": ["walk", "run", "move", "travel"],
     "Inspect": ["view", "look", "examine"],
@@ -77,6 +78,7 @@
     "Interact": ["get", "search"],
     "Quit": ["exit", "leave"],
     "Replay": ["reset", "retry", "restart"]
+
   },
   "Crafting Recipes": {
     "Result Item": "",

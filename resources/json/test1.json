@@ -68,15 +68,17 @@
   "Starting Inventory": [""],
   "Intro Text": [""],
   "Synonym Dictionary": {
-    "Info": ["Help"],
-    "Go": [""],
-    "Inspect": [""],
-    "Take": [""],
-    "Open": [""],
-    "Craft": [""],
-    "Interact": [""],
-    "Quit": [""],
-    "Replay": [""]
+
+    "Info": ["help", "status", "check"],
+    "Go": ["walk", "run", "move", "travel"],
+    "Inspect": ["view", "look", "examine"],
+    "Take": ["pick up", "lift", "grab", "loot"],
+    "Open": ["unlock"],
+    "Craft": ["build", "make"],
+    "Interact": ["get", "search"],
+    "Quit": ["exit", "leave"],
+    "Replay": ["reset", "retry", "restart"]
+
   },
   "Crafting Recipes": {
     "Result Item": "",

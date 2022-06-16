@@ -30,6 +30,10 @@ class FileParser {
                 FileParser toReturn = new FileParser();
                 // created parser
                 Object obj = JSONValue.parse(new FileReader(String.valueOf(test1)));
+                if(obj == null) {
+                        System.out.println("Selected file does not contain valid JSON data.");
+                        return null;
+                }
                 if (JSONObject.class == obj.getClass()) {
                         jsonObject = (JSONObject) obj;
                         if (toReturn.parseRooms()) return null;
@@ -37,6 +41,10 @@ class FileParser {
                         if (toReturn.parseNpcs()) return null;
                         if (toReturn.parseCraftingRecipes()) return null;
                         if (toReturn.parseEndCondition()) return null;
+                        if (toReturn.parseSynonyms()) return null;
+                } else{
+                        System.out.println("Base entity in selected file is not a JSON Object.");
+                        return null;
                 }
 
                 //Dummy logic for Iteration 1 MVP, will replace with actual JSON parsing in Iteration 2
@@ -92,22 +100,85 @@ class FileParser {
                 return toReturn;
         }
 
+        private boolean parseSynonyms() {
+                if (!jsonObject.containsKey("Synonym Dictionary")){
+                        System.out.println("Key value \"Synonym Dictionary\" does not exist in base JSON Object.");
+                        return true;
+                }
+                Object obj = jsonObject.get("Synonym Dictionary");
+                if (!JSONObject.class.equals(obj.getClass())){
+                        System.out.println("Synonym Dictionary must be a JSON object");
+                        return true;
+                }
+                JSONObject dictionaryJson = (JSONObject) obj;
+                for (SynonymDictionary dict : SynonymDictionary.values()){
+                        String key = dict.name().toLowerCase();
+                        char[] chars = key.toCharArray();
+                        chars[0] = key.toUpperCase().charAt(0);
+                        key = String.valueOf(chars);
+                        if (!dictionaryJson.containsKey(key)){
+                                System.out.println("Key value \"" + key + "\" does not exist in Synonym Dictionary.");
+                                return true;
+                        }
+                        dict.synonyms = parseStringList(dictionaryJson.get(key));
+                        if (dict.synonyms == null){
+                                System.out.println("Synonym Dictionary key " + key + ".");
+                                return true;
+                        }
+                        for (int i = 0; i < dict.synonyms.size(); i++){
+                                dict.synonyms.set(i, dict.synonyms.get(i).toLowerCase());
+                        }
+                }
+
+                return false;
+        }
+
         private boolean parseRooms() {
                 roomsAtStart = new HashMap<>();
+                if (!jsonObject.containsKey("Rooms")){
+                        System.out.println("Key value \"Rooms\" does not exist in base JSON Object.");
+                        return true;
+                }
                 Object obj = jsonObject.get("Rooms");
+
                 if (JSONArray.class == obj.getClass()) {
                         JSONArray jsonRooms = (JSONArray) obj;
+                        if(jsonRooms.size() == 0){
+                                System.out.println("Rooms array must not be empty.");
+                                return true;
+                        }
                         for (Object roomObj : jsonRooms) {
                                 //programmer.tryNotToCry();
                                 //programmer.cryALot();
+                                if (!JSONObject.class.equals(roomObj.getClass()))
+                                {
+                                        System.out.println("All entries in Rooms must be JSON Objects");
+                                        return true;
+                                }
                                 JSONObject roomJsonObj = (JSONObject) roomObj;
-                                String displayName = parseString(roomJsonObj.get("Display Name"));
-
-                                String name = parseString(roomJsonObj.get("Name"));
+                                if (!roomJsonObj.containsKey("Name")){
+                                        System.out.println("Key value \"Name\" does not exist in Room JSON Object.");
+                                        return true;
+                                }String name = parseString(roomJsonObj.get("Name"));
                                 if (name == null) {
                                         System.out.println("Room Name.");
                                         return true;
                                 }
+                                if (name.equals("")){
+                                        System.out.println("Room name cannot be an empty string.");
+                                        return true;
+                                }
+                                if (!roomJsonObj.containsKey("Display Name")){
+                                        System.out.println("Key value \"Display Name\" does not exist in Room " +
+                                                name + " JSON Object.");
+                                        return true;
+                                }
+                                String displayName = parseString(roomJsonObj.get("Display Name"));
+                                if (displayName == null){
+                                        System.out.println("Room " + name + " Display Name.");
+                                        return true;
+                                }
+
                                 HashMap<String, List<String>> flags;
                                 if (roomJsonObj.keySet().contains("Effect Tags")) {
                                         obj = roomJsonObj.get("Effect Tags");
@@ -118,7 +189,11 @@ class FileParser {
                                                         System.out.println(name + " Effect Tags.");
                                                         return true;
                                                 }
-                                        } else return true;
+                                        } else {
+                                                System.out.println("Effect Tags in room " + name + " must be a JSON" +
+                                                        " Array.");
+                                                return true;
+                                        }
                                 } else flags = new HashMap<>();
                                 List<String> items;
                                 if (roomJsonObj.keySet().contains("Items")) {
@@ -134,11 +209,24 @@ class FileParser {
                                 } else items = new ArrayList<>();
 
                                 HashMap<String, String> connections;
+
                                 //parse connected rooms
+                                if(!roomJsonObj.containsKey("Connected Rooms")){
+                                        System.out.println("Key Value \"Connected Rooms\" not found in Room " + name
+                                        + ".");
+                                        return true;
+                                }
                                 obj = roomJsonObj.get("Connected Rooms");
+
+
                                 connections = new HashMap<>();
                                 if(JSONArray.class.equals(obj.getClass())){
                                         JSONArray connectionArray = (JSONArray)obj;
+                                        if (connectionArray.size() == 0){
+                                                System.out.println("Connections array at " + name + " cannot be " +
+                                                        "empty.");
+                                                return true;
+                                        }
                                         for (Object derp : connectionArray) {
                                                 if (JSONObject.class.equals(derp.getClass())){
                                                         JSONObject connection = (JSONObject)derp;
@@ -168,12 +256,19 @@ class FileParser {
                                                         }
                                                 } else {
                                                         System.out.println("Invalid Data Type when Object was " +
-                                                                "expected at Room " + name + " Connections");
+                                                                "expected at Room " + name + " Connected Rooms.");
                                                         return true;
                                                 }
                                         }
+                                } else {
+                                        System.out.println("Connected Rooms in room " + name + " must be a JSON array");
+                                        return true;
                                 }
-
+                                if(!roomJsonObj.containsKey("Description")){
+                                        System.out.println("Key Value \"Description\" not found in Room " + name
+                                                + ".");
+                                        return true;
+                                }
                                 String description = parseString(roomJsonObj.get("Description"));
                                 if (description == null) {
                                         System.out.println("Room " + name + " Description.");
@@ -192,6 +287,10 @@ class FileParser {
                                 roomsAtStart.put(room.name.toLowerCase(), room);
 
                         }
+                }
+                else{
+                        System.out.println("Rooms must be a JSON array.");
+                        return true;
                 }
                 return false;
         }
@@ -219,10 +318,16 @@ class FileParser {
                 for (Object loopObj : flagsJson) {
                         if (JSONObject.class == loopObj.getClass()){
                                 JSONObject flagJson = (JSONObject) loopObj;
+                                if(!flagJson.containsKey("Tag Name")){
+                                        System.out.println("Key Value \"Tag Name\" not found in Effects Tag in ");
+                                }
                                 String name = parseString(flagJson.get("Tag Name"));
                                 if (name == null) {
                                         System.out.print("Tag Name in: ");
                                         return null;
+                                }
+                                if(!flagJson.containsKey("Tag Data")){
+                                        System.out.println("Key Value \"Tag Data\" not found in Effects Tag in ");
                                 }
                                 List<String> dataList = parseStringList(flagJson.get("Tag Data"));
                                 if(dataList == null) {
@@ -231,7 +336,10 @@ class FileParser {
                                 }
                                 toReturn.put(name, dataList);
 
-                        } else return null;
+                        } else {
+                                System.out.print("Contents of array must be JSON objects in ");
+                                return null;
+                        }
                 }
                 return toReturn;
         }

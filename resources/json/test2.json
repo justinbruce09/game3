@@ -1,0 +1,18 @@
+{
+  "Rooms" : [
+    {
+      "Name" : "derp",
+      "Display Name" : "false",
+      "Effect Tags" :[
+        {
+          "Tag Name" : "4",
+          "Tag Data" : [""]
+        }
+      ],
+      "Connected Rooms" : [
+        {
+          "dave": "meh"
+        }],
+      "Description" : "5"
+    }]
+}

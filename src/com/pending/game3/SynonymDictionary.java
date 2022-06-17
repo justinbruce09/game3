@@ -12,7 +12,8 @@ public enum SynonymDictionary {
     CRAFT,
     INTERACT,
     QUIT,
-    REPLAY;
+    REPLAY,
+    DROP;
 
     List<String> synonyms = new ArrayList<>();
 

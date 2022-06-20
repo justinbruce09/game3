@@ -191,7 +191,7 @@ class FileParser {
                 }
                 Object obj = jsonObject.get("Rooms");
 
-                if (JSONArray.class == obj.getClass()) {
+                if (obj != null && JSONArray.class.equals(obj.getClass())) {
                         JSONArray jsonRooms = (JSONArray) obj;
                         if(jsonRooms.size() == 0){
                                 System.out.println("Rooms array must not be empty.");
@@ -200,7 +200,7 @@ class FileParser {
                         for (Object roomObj : jsonRooms) {
                                 //programmer.tryNotToCry();
                                 //programmer.cryALot();
-                                if (!JSONObject.class.equals(roomObj.getClass()))
+                                if (roomObj == null || !JSONObject.class.equals(roomObj.getClass()))
                                 {
                                         System.out.println("All entries in Rooms must be JSON Objects");
                                         return true;
@@ -229,6 +229,7 @@ class FileParser {
                                         return true;
                                 }
 
+                                //parse flags
                                 HashMap<String, List<String>> flags;
                                 if (roomJsonObj.keySet().contains("Effect Tags")) {
                                         obj = roomJsonObj.get("Effect Tags");
@@ -245,6 +246,8 @@ class FileParser {
                                                 return true;
                                         }
                                 } else flags = new HashMap<>();
+
+                                //parse items
                                 List<String> items;
                                 if (roomJsonObj.keySet().contains("Items")) {
                                         items = parseStringList(roomJsonObj.get("Items"));
@@ -259,14 +262,14 @@ class FileParser {
                                 } else items = new ArrayList<>();
                                 for(String item : items){
                                         if(!itemsAtStart.containsKey(item)){
-                                                System.out.println("Item" + item + " in room " + name + "is not " +
+                                                System.out.println("Item " + item + " in room " + name + " is not " +
                                                         "defined in Items.");
                                                 return true;
                                         }
                                 }
-                                HashMap<String, String> connections;
 
                                 //parse connected rooms
+                                HashMap<String, String> connections;
                                 if(!roomJsonObj.containsKey("Connected Rooms")){
                                         System.out.println("Key Value \"Connected Rooms\" not found in Room " + name
                                         + ".");
@@ -276,7 +279,7 @@ class FileParser {
 
 
                                 connections = new HashMap<>();
-                                if(JSONArray.class.equals(obj.getClass())){
+                                if(obj != null && JSONArray.class.equals(obj.getClass())){
                                         JSONArray connectionArray = (JSONArray)obj;
                                         if (connectionArray.size() == 0){
                                                 System.out.println("Connections array at " + name + " cannot be " +
@@ -284,7 +287,7 @@ class FileParser {
                                                 return true;
                                         }
                                         for (Object derp : connectionArray) {
-                                                if (JSONObject.class.equals(derp.getClass())){
+                                                if (derp != null && JSONObject.class.equals(derp.getClass())){
                                                         JSONObject connection = (JSONObject)derp;
                                                         if(connection.keySet().size() == 1){
                                                                 obj = connection.keySet().toArray()[0];
@@ -295,14 +298,14 @@ class FileParser {
                                                                         return true;
                                                                 }
                                                                 obj = connection.get(direction);
-                                                                String destination = parseString(obj).toLowerCase();
+                                                                String destination = parseString(obj);
                                                                 if (destination == null) {
                                                                         System.out.println("Room " + name +
                                                                                 " Connection Destination.");
                                                                 return true;
                                                                 }
                                                                 connections.put(direction.toLowerCase(),
-                                                                        destination);
+                                                                        destination.toLowerCase());
                                                         } else {
                                                                 System.out.println("Invalid Room " + name +
                                                                         " Connection Object " +
@@ -337,11 +340,29 @@ class FileParser {
                                                 System.out.println("Room " + name + " Npcs.");
                                                 return true;
                                         }
+                                        for (String npc : npcs){
+                                                if (!npcsAtStart.containsKey(npc)){
+                                                        System.out.println(npc + " in room " + name + " Npcs is not " +
+                                                                "defined in NPCs.");
+                                                        return true;
+                                                }
+                                        }
                                 }else npcs = new ArrayList<>();
 
                                 Room room = new Room(flags, items, npcs, connections, description, name, displayName);
                                 roomsAtStart.put(room.name.toLowerCase(), room);
 
+                        }
+                        for (String roomKey : roomsAtStart.keySet()){
+                                Room room = roomsAtStart.get(roomKey);
+                                for(String direction : room.getConnections().keySet()){
+                                        String destination = room.getConnections().get(direction);
+                                        if(!roomsAtStart.containsKey(destination)){
+                                                System.out.println("Room " + destination + " in connections in room " +
+                                                        roomKey + " does not exist.");
+                                                return true;
+                                        }
+                                }
                         }
                 }
                 else{
@@ -422,6 +443,7 @@ class FileParser {
                 }
                 return toReturn;
         }
+
         private boolean parseItems(){
                 itemsAtStart = new HashMap<>();
                 if(!jsonObject.containsKey("Items")){
@@ -429,14 +451,14 @@ class FileParser {
                         return true;
                 }
                 Object obj= jsonObject.get("Items");
-                if(JSONArray.class.equals(obj.getClass())) { //if the item in the array = obj
+                if(obj != null && JSONArray.class.equals(obj.getClass())) { //if the item in the array = obj
                         JSONArray jsonItems = (JSONArray) obj;  // downcast the item to a JSON simple obj
                         if(jsonItems.size() == 0){
                                 System.out.println("Items array must not be empty.");
                                 return true;
                         }
                         for (Object itemObj : jsonItems) { // for each item in jsonItems (JSON simple obj)
-                                if(!JSONObject.class.equals(itemObj.getClass())){
+                                if(itemObj == null || !JSONObject.class.equals(itemObj.getClass())){
                                         System.out.println("Contents of Items array must be JSON objects");
                                         return true;
                                 }
@@ -487,6 +509,7 @@ class FileParser {
                 }
                 return false;
         }
+
         private boolean parseNpcs() {
                 npcsAtStart = new HashMap<>();
                 if(!jsonObject.containsKey("NPCs")){
@@ -562,16 +585,18 @@ class FileParser {
                 }
                 return false;
         }
+
         private boolean parseCraftingRecipes(){
                 recipes = new ArrayList<>();
                 if(!jsonObject.containsKey("Crafting Recipes")){
                         return false;
                 }
                 Object obj = jsonObject.get("Crafting Recipes");
-                if(JSONArray.class.equals(obj.getClass())){
+                if(obj != null && JSONArray.class.equals(obj.getClass())){
                         JSONArray jsonCraftingRecipes = (JSONArray) obj;
                         for(Object craftingRecipeObj : jsonCraftingRecipes){
-                                if (!JSONObject.class.equals(craftingRecipeObj.getClass())){
+                                if (craftingRecipeObj == null
+                                        || !JSONObject.class.equals(craftingRecipeObj.getClass())){
                                         System.out.println("Contents of Crafting Recipes array must be JSON objects");
                                         return true;
                                 }
@@ -582,11 +607,19 @@ class FileParser {
                                                 "entry.");
                                         return true;
                                 }
+
+
+
                                 CraftingRecipe craftingRecipe = new CraftingRecipe();
 
                                 craftingRecipe.result = parseString(craftingRecipeJsonObj.get("Result"));
                                 if (craftingRecipe.result == null) {
                                         System.out.println("Crafting Recipe Result.");
+                                        return true;
+                                }
+                                if(!itemsAtStart.containsKey(craftingRecipe.result)){
+                                        System.out.println("Item " + craftingRecipe.result + " in Crafting Recipe " +
+                                                "Result is not defined in Items.");
                                         return true;
                                 }
 
@@ -600,6 +633,14 @@ class FileParser {
                                         System.out.println("Crafting Recipe Ingredients");
                                         return true;
                                 }
+
+                                for (String item : craftingRecipe.ingredients){
+                                        if(!itemsAtStart.containsKey(item)){
+                                                System.out.println("Item " + item + " in Crafting Recipe Ingredients " +
+                                                        "is not defined in Items.");
+                                                return true;
+                                        }
+                                }
                         }
                 } else {
                         System.out.println("Crafting Recipes must be a JSON array.");
@@ -607,6 +648,7 @@ class FileParser {
                 }
                 return false;
         }
+
         private boolean parseEndCondition(){
                 if(!jsonObject.containsKey("End Conditions")){
                         System.out.println("Key \"End Conditions\" does not exist in base JSON object.");
@@ -637,7 +679,7 @@ class FileParser {
                                         System.out.println("Win must be a boolean value.");
                                         return true;
                                 }
-                                endCondition.win = ((Boolean) obj).booleanValue();
+                                endCondition.win = (boolean) obj;
                                 if(endConditionsJsonObj.containsKey("Room Requirement")) {
 
                                         endCondition.roomReq = parseString(endConditionsJsonObj.get("Room Requirement"));
@@ -645,11 +687,24 @@ class FileParser {
                                                 System.out.println("End Condition Room Requirement.");
                                                 return true;
                                         }
+                                        if(!roomsAtStart.containsKey(endCondition.roomReq)){
+                                                System.out.println("Room " + endCondition.roomReq + " in End " +
+                                                        "Conditions is not defined in Rooms.");
+                                                return true;
+                                        }
                                 }
                                 if(endConditionsJsonObj.containsKey("Item Requirements")) {
                                         endCondition.itemReq = parseStringList(endConditionsJsonObj.get("Item Requirements"));
                                         if (endCondition.itemReq == null) {
                                                 System.out.println("End Condition Item Requirements");
+                                                return true;
+                                        }
+                                        for (String item : endCondition.itemReq){
+                                                if(!itemsAtStart.containsKey(item)){
+                                                        System.out.println("Item " + item + " in End " +
+                                                                "Conditions is not defined in Items.");
+                                                        return true;
+                                                }
                                         }
                                 }
                                 if(endConditionsJsonObj.containsKey("NPC Status Requirements")){
@@ -673,6 +728,11 @@ class FileParser {
                                                         String name = parseString(npcJsonObj.get("Name"));
                                                         if (name == null) {
                                                                 System.out.println("NPC Name in End Conditions");
+                                                                return true;
+                                                        }
+                                                        if (!npcsAtStart.containsKey(name)){
+                                                                System.out.println("NPC " + name + " in NPC Status " +
+                                                                        "Requirements is not defined in Npcs.");
                                                                 return true;
                                                         }
                                                         HashMap<String, List<String>> flags;
@@ -710,8 +770,8 @@ class FileParser {
                                                 return true;
                                         }
                                 }
-                                if (endCondition.itemReq == null
-                                        && endCondition.npcReq == null
+                                if ((endCondition.itemReq == null || endCondition.itemReq.size() == 0)
+                                        && (endCondition.npcReq == null || endCondition.npcReq.size() == 0)
                                         && null == endCondition.roomReq) {
                                         System.out.println("All End Conditions must have at least one of: " +
                                                 "Room Requirement, Item Requirements, or NPC Status Requirements.");

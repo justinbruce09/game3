@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Game3 {
-    public static final String jsonDir = "game3/resources/json";
+    public static final String jsonDir = "resources/json";
     public static final String mainSplash = "So, you want to play an adventure game?\n" +
             "Too bad, this is just an engine for adventure games.\n" +
             "After selecting New Game, you will be prompted to choose a .json file to load the game from.\n" +
@@ -101,6 +101,9 @@ class Game3 {
         items = fileParser.itemsAtStart;
         currentRoom = rooms.get(fileParser.startingRoom);
         npcs = fileParser.npcsAtStart;
+        for (String line : fileParser.splashText){
+            System.out.println(line);
+        }
         mainLoop();
     }
     // method to run the main menu
@@ -132,6 +135,7 @@ class Game3 {
         System.out.println(getCurrentRoom().description);
         System.out.println("Items: " + getCurrentRoom().getItems());
         System.out.println("Inventory: " + getInventory());
+        System.out.println("NPCs: " + getCurrentRoom().getNpcs());
         System.out.print("Movement options: ");
         for(String direction : currentRoom.getConnections().keySet()) {
             System.out.print("\"" + direction + "\" ");

@@ -1,12 +1,9 @@
 package com.pending.game3;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 class InputParser {
-
+    Random random = new Random();
     // getInput()
     boolean getInput(Scanner userInput){
         System.out.print("Enter Command\n> "); // allows input command to be on next line
@@ -77,18 +74,55 @@ class InputParser {
                 break;
             case QUIT:
                 return true;
+            case INTERACT:
+                interact(inputSplit[1]);
+                break;
             case INFO:
                 for (SynonymDictionary synDict: SynonymDictionary.values()) {
                     System.out.println("Command: " + synDict.name() + " valid aliases: " + synDict.synonyms);
                 }
-                return true;
+                break;
             case CRAFT:
                 crafting(userInput);
-                return true;
+                break;
             default:
                 System.out.println("Command not yet supported");
        }
                 return false;
+    }
+
+    private void interact(String target) {
+        //if the NPC exists and is in this room
+        if(Game3.getNpcs().containsKey(target) && Game3.getCurrentRoom().getNpcs().contains(target)) {
+            Npc npc = Game3.getNpcs().get(target);
+            //if the NPC has the "Translator" tag
+            if (npc.getFlags().containsKey("Translator")) {
+                List<String> translatorFlagData = npc.getFlags().get("Translator");
+                //if the player has an item with the translator tag and the translator tag has a matching ID
+                for (String itemName : Game3.getInventory()) {
+                    HashMap<String, List<String>> itemFlags = Game3.getItems().get(itemName).getFlags();
+                    if (itemFlags.containsKey("Translator")
+                            && itemFlags.get("Translator").contains(translatorFlagData.get(0))) {
+                        if (npc.getFlags().containsKey("Random")) {
+                            System.out.println(npc.getAlternativeDialogue()
+                                    .get(random.nextInt(npc.getAlternativeDialogue().size())));
+                        } else {
+                            System.out.println(npc.getAlternativeDialogue().get(0));
+                        }
+                        return;
+                    }
+                }
+            }
+            if(npc.getFlags().containsKey("Random")){
+                System.out.println(npc.getAlternativeDialogue()
+                        .get(random.nextInt(npc.getAlternativeDialogue().size())));
+            } else {
+
+                System.out.println(npc.dialogue);
+            }
+        } else{
+            System.out.println("They're not in this room!");
+        }
     }
 
     private void crafting(Scanner userInput) {

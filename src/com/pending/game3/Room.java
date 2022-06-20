@@ -65,13 +65,6 @@ class Room {
         }
     }
 
-    void dropItem(String itemToDrop) {
-        if (Game3.getInventory().contains(itemToDrop)) {
-            Game3.getInventory().remove(itemToDrop);
-            items.add(itemToDrop);
-        }
-    }
-
     void look(){
     }
 

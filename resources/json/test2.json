@@ -3,8 +3,6 @@
     {
       "Name" : "derp",
       "Display Name" : "false",
-      "Items" : ["stuff"],
-      "Npcs": ["1"],
       "Effect Tags" :[
         {
           "Tag Name" : "4",
@@ -16,23 +14,7 @@
           "dave": "meh"
         }],
       "Description" : "5"
-    },
-    {
-      "Name" : "meh",
-      "Display Name" : "false",
-      "Effect Tags" :[
-        {
-          "Tag Name" : "4",
-          "Tag Data" : [""]
-        }
-      ],
-      "Connected Rooms" : [
-        {
-          "dave": "derp"
-        }],
-      "Description" : "5"
-    }
-  ],
+    }],
   "Items" : [
     {
       "Name" : "stuff",
@@ -61,12 +43,9 @@
             {
               "Tag Name": "null",
               "Tag Data": ["null"]
-            }
-          ]
-        }
-      ]
-    }
-  ],
+            }]
+        }]
+    }],
   "Synonym Dictionary": {
     "Info": [""],
     "Go": [""],

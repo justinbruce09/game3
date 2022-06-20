@@ -23,21 +23,12 @@ class InputParser {
                 command = SynonymDictionary.INSPECT;
             } else if (SynonymDictionary.TAKE.synonyms.contains(inputSplit[0])) {
                 command = SynonymDictionary.TAKE;
-            } else if (SynonymDictionary.OPEN.synonyms.contains(inputSplit[0])) {
-                command = SynonymDictionary.OPEN;
-            } else if (SynonymDictionary.CRAFT.synonyms.contains(inputSplit[0])) {
-                command = SynonymDictionary.CRAFT;
-            } else if (SynonymDictionary.INTERACT.synonyms.contains(inputSplit[0])) {
-                command = SynonymDictionary.INTERACT;
             } else if (SynonymDictionary.QUIT.synonyms.contains(inputSplit[0])) {
                 command = SynonymDictionary.QUIT;
-            } else if (SynonymDictionary.REPLAY.synonyms.contains(inputSplit[0])) {
-                command = SynonymDictionary.REPLAY;
             } else if (SynonymDictionary.INFO.synonyms.contains(inputSplit[0])) {
                 command = SynonymDictionary.INFO;
-            } else if (SynonymDictionary.DROP.synonyms.contains(inputSplit[0])) {
-                command = SynonymDictionary.DROP;
-            } else {
+            }// TODO: else if (check the rest of SynonymDict for matches)
+            else {
                 System.out.println("command " + input +
                         " not recognized. enter \"Info\" for a list of valid commands.");
                 return false;
@@ -65,14 +56,9 @@ class InputParser {
                     }
                 break;
             case TAKE:
-                    if (Game3.getItems().containsKey(inputSplit[1])) {
+                    if (Game3.getCurrentRoom().getItems().contains(inputSplit[1])) {
                     Game3.getCurrentRoom().takeItem(inputSplit[1]);
                     }
-                break;
-            case DROP:
-                if (Game3.getItems().containsKey(inputSplit[1])) {
-                    Game3.getCurrentRoom().dropItem(inputSplit[1]);
-                }
                 break;
             case QUIT:
                 return true;

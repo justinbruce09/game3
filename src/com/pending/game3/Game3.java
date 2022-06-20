@@ -101,9 +101,6 @@ class Game3 {
         items = fileParser.itemsAtStart;
         currentRoom = rooms.get(fileParser.startingRoom);
         npcs = fileParser.npcsAtStart;
-        for (String line : fileParser.splashText){
-            System.out.println(line);
-        }
         mainLoop();
     }
     // method to run the main menu
@@ -135,7 +132,6 @@ class Game3 {
         System.out.println(getCurrentRoom().description);
         System.out.println("Items: " + getCurrentRoom().getItems());
         System.out.println("Inventory: " + getInventory());
-        System.out.println("NPCs: " + getCurrentRoom().getNpcs());
         System.out.print("Movement options: ");
         for(String direction : currentRoom.getConnections().keySet()) {
             System.out.print("\"" + direction + "\" ");

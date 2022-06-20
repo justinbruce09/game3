@@ -128,8 +128,49 @@ class Game3 {
             if(inputParser.getInput(reader)) {
                 break;
             }
+            if(checkEndCondition()) {
+                break;
+            }
         }
     }
+
+    private boolean checkEndCondition() {
+        for(EndCondition ec : fileParser.endConditions) {
+            //if in the correct room, true
+            boolean roomCheck = false;
+            if(ec.roomReq == null || currentRoom.name.equalsIgnoreCase(ec.roomReq)){
+                roomCheck = true;
+            }
+            //if any NPC doesn't match required tags, false
+            boolean npcsCheck = true;
+            for (Npc npc : ec.npcReq){
+                for(String tagName : npc.getFlags().keySet()){
+                    if(!npcs.get(npc).getFlags().containsKey(tagName)){
+                        npcsCheck = false;
+                        break;
+                    }
+                }
+            }
+            //if any item not in inventory, false
+            boolean itemsCheck = true;
+            for(String item : ec.itemReq){
+                if(!inventory.contains(item)){
+                    itemsCheck = false;
+                }
+            }
+            if (roomCheck && npcsCheck && itemsCheck){
+                if(ec.win){
+                    System.out.print("YOU WIN! ");
+                } else {
+                    System.out.print("You Lost... ");
+                }
+                //TODO: add EndCondition text here.
+                System.out.println();
+            }
+        }
+        return false;
+    }
+
     // method that show the user the current room, items in the room, and their inventory
     private void displayRoom() {
         System.out.println(getCurrentRoom().description);

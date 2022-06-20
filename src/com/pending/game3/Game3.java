@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 class Game3 {
-    public static final String jsonDir = "resources/json";
+    public static final String jsonDir = "game3/resources/json";
     public static final String mainSplash = "So, you want to play an adventure game?\n" +
             "Too bad, this is just an engine for adventure games.\n" +
             "After selecting New Game, you will be prompted to choose a .json file to load the game from.\n" +

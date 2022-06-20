@@ -52,56 +52,12 @@ class FileParser {
                         return null;
                 }
 
-                //Dummy logic for Iteration 1 MVP, will replace with actual JSON parsing in Iteration 2
-//                toReturn.startingInventory = new ArrayList<>();
-//                toReturn.roomsAtStart = new HashMap<>();
-//                Room room = new Room();
-//                room.description = "What appears to be an examination room with three walls, one of which " +
-//                                   "is curved outward and has a door in it.";
-//                room.items = new ArrayList<>();
-//                room.items.add("body-scanning device");
-//                room.items.add("medicine");
-//                room.items.add("surgical instrument trolley");
-//                room.items.add("key card");
-//                room.flags = new ArrayList<>();
-//                room.npcs = new ArrayList<>();
-//                room.name = "examination room";
-//                room.displayName = "examination room";
-//                toReturn.roomsAtStart.put(room.name, room);
-//                toReturn.startingRoom = "examination room";
-//                toReturn.itemsAtStart = new HashMap<>();
-//                Item item = new Item();
-//                item.name = "body-scanning device";
-//                item.flags = new HashMap<>();
-//                item.description = "You think this devices is intended for anatomical scanning, but it looks really" +
-//                        " similar to a nightstick. You could probably bash some head with it.";
-//                toReturn.itemsAtStart.put(item.name, item);
-//                item = new Item();
-//                item.name = "medicine";
-//                item.flags = new HashMap<>();
-//                item.description = "This looks like an assortment of medicines, probably shouldn't use any until " +
-//                        "you find out what they do.";
-//                toReturn.itemsAtStart.put(item.name, item);
-//                item = new Item();
-//                item.name = "key card";
-//                item.flags = new HashMap<>();
-//                List<String> flagData = new ArrayList<>();
-//                flagData.add("Key1") ;
-//                item.flags.put("Key", flagData);
-//                item.description = "This looks an awful lot like a key-card from one of them new-fangled SYE-FIE " +
-//                        "shows.";
-//                toReturn.itemsAtStart.put(item.name, item);
-//                item = new Item();
-//                item.name = "surgical instrument trolley";
-//                item.flags = new HashMap<>();
-//                flagData = new ArrayList<>();
-//                item.flags.put("Decor", flagData);
-//                item.description = "A trolley that looks like it should have an assortment of surgical tools on it.";
-//                toReturn.itemsAtStart.put(item.name, item);
-//                toReturn.npcsAtStart = new HashMap<>();
-//                toReturn.recipes = new ArrayList<>();
-//                toReturn.endConditions = new ArrayList<>();
 
+//
+//
+//
+//
+//
                 return toReturn;
         }
 

@@ -147,7 +147,9 @@
       "Items": ["Shiny Spacecraft", "Unicorn Fart fuel cells", "Space Crates", "Robot Workers", "Control Panel"],
       "Connected Rooms": [
         {
-          "Inward left": "Hallway2",
+          "Inward left": "Hallway2"
+        },
+        {
           "Inward right": "Hallway3"
         }
       ]
@@ -163,13 +165,20 @@
         }
         ],
       "Description": "An empty hallway",
-      "Items": [""],
       "Connected Rooms": [
         {
-          "Clockwise": "Hallway2",
-          "Counter-Clockwise": "Hallway4",
-          "inward": "Examination Room",
-          "outward right": "Crews Quarters",
+          "Clockwise": "Hallway2"
+        },
+        {
+          "Counter-Clockwise": "Hallway4"
+        },
+        {
+          "inward": "Examination Room"
+        },
+        {
+          "outward right": "Crews Quarters"
+        },
+        {
           "outward left": "Specimen Storage"
         }
       ]
@@ -178,13 +187,20 @@
       "Name": "Hallway2",
       "Display Name": "Hallway",
       "Description": "An empty hallway",
-      "Items": [""],
       "Connected Rooms": [
         {
-          "Clockwise": "Hallway1",
-          "Counter-Clockwise": "Hallway3",
-          "Inward": "Engine Room",
-          "Outward left": "Officers Quarters",
+          "Clockwise": "Hallway1"
+        },
+        {
+          "Counter-Clockwise": "Hallway3"
+        },
+        {
+          "Inward": "Engine Room"
+        },
+        {
+          "Outward left": "Officers Quarters"
+        },
+        {
           "Outward right": "Shuttle Bay"
         }
       ]
@@ -193,12 +209,17 @@
       "Name": "Hallway3",
       "Display Name": "Hallway",
       "Description": "An empty hallway",
-      "Items": [""],
       "Connected Rooms": [
         {
-          "Clockwise": "Hallway2",
-          "Counter-Clockwise": "Hallway4",
-          "Inward": "Bridge",
+          "Clockwise": "Hallway2"
+        },
+        {
+          "Counter-Clockwise": "Hallway4"
+        },
+        {
+          "Inward": "Bridge"
+        },
+        {
           "Outward": "Shuttle Bay"
         }
       ]
@@ -207,14 +228,18 @@
       "Name": "Hallway4",
       "Display Name": "Hallway",
       "Description": "An empty hallway",
-      "Items": [
-        ""
-      ],
+
       "Connected Rooms": [
         {
-          "Clockwise": "Hallway3",
-          "Counter-Clockwise": "Hallway1",
-          "Outward left": "Waste Excrement Facility",
+          "Clockwise": "Hallway3"
+        },
+        {
+          "Counter-Clockwise": "Hallway1"
+        },
+        {
+          "Outward left": "Waste Excretion Facility"
+        },
+        {
           "Outward right": "Nutrient Paste Dispensary"
         }
       ]
@@ -392,7 +417,7 @@
       "Description": "large robots with track-like tires, they keep moving things around and fixing up the shiny spacecraft. They just making a beeping and whirring sound as they work."
     },
     {
-      "Name": "Alien Cow Milk Dispensary",
+      "Name": "Alien Cow Milk Dispenser",
       "Effect Tags": [
         {
           "Tag Name": "decor",
@@ -402,7 +427,67 @@
       "Description": "A large tank that dispenses a blue milk-like substance."
     },
     {
-      "Name": "Alien Vending Maching",
+      "Name": "Control Panel",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "This is probably used to control the doors to let the shuttles in and out. Too bad you can't read any of the controls."
+    },
+    {
+      "Name": "nanofactory",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "You watch in amazement as this thing seems to build stuff from nothing."
+    },
+    {
+      "Name": "vid-screen",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "These floating screens look really fancy. Too fancy for you to figure out."
+    },
+    {
+      "Name": "sleep-pods",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "You're willing to wager money that these are beds, but you have no clue how to get into one."
+    },
+    {
+      "Name": "foot-lockers",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "You guess these small pod-looking things are storage, but you don't know how to open them."
+    },
+    {
+      "Name": "specimen tanks",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "These creepy looking tanks have an assortment of bizarre creatures suspended in some sort of fluid."
+    },
+    {
+      "Name": "Alien Vending Machine",
       "Effect Tags": [
         {
           "Tag Name": "decor",
@@ -480,6 +565,56 @@
         }
       ],
       "Description": "An item used for crafting."
+    },
+    {
+      "Name": "hand-wavium fusion/fission reactor loop",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "This device appears to generate power by transferring a sparkly, multi-colored gas between two reactors. The stuff looks like what you'd expect unicorn farts to look like."
+    },
+    {
+      "Name": "excrement purge vessels",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "This looks like it's made to contain and extract bodily waste so it doesn't float around."
+    },
+    {
+      "Name": "sanitation vessels",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "You guess these three sea shells are for cleaning your hands, but you don't know how they work."
+    },
+    {
+      "Name": "excrement purge vessels",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "This looks like it's made to contain and extract bodily waste so it doesn't float around."
+    },
+    {
+      "Name": "sterilization facility",
+      "Effect Tags": [
+        {
+          "Tag Name": "Decor",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "This archway makes you feel fuzzy and your teeth feel really weird every time you walk through it."
     }
   ],
   "NPCs": [
@@ -540,8 +675,8 @@
     }
   ],
   "Starting Room": "Examination Room",
-  "Starting Inventory": [""],
-  "Intro Text": [""],
+  "Starting Inventory": [],
+  "Splash Text": ["Collect the parts to make a translation device so you can convince the aliens to take you home!"],
   "Synonym Dictionary": {
 
     "Info": ["help", "status", "check"],
@@ -556,28 +691,22 @@
     "Drop": ["leave", "throw", "toss", "put-down"]
 
   },
-  "Crafting Recipes": {
-    "Result Item": "",
-    "Ingredients": [""]
-  },
+  "Crafting Recipes": [
+    {
+      "Result": "Multi-Lingual Neural Mechanical Translator (MLNMT)",
+      "Ingredients": [
+        "Springy Thingy",
+        "Communication buffer GUI",
+        "Greenprints projector do-hickey",
+        "Arcanospanner"
+      ]
+    }
+  ],
   "End Conditions": [
     {
       "Win": true,
-      "Room Requirement": "",
-      "Item Requirements": [""],
-      "NPC Status Requirements": [
-        {
-          "Name": "",
-          "Effect Tags": [
-            {
-              "Tag Name": "",
-              "Tag Data": [""]
-            }
-          ],
-          "Dialogue": "",
-          "Alternate Dialogue": [""]
-        }
-      ]
+      "Item Requirements": ["Multi-Lingual Neural Mechanical Translator (MLNMT)"],
+      "Room Requirement": "Bridge"
     }
   ]
 }

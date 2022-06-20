@@ -452,7 +452,7 @@ class FileParser {
                                 }
 
                                 String description = parseString(itemJsonObj.get("Description")); // set item.description to parsed JSON simple object
-                                Item item = new Item(name, description, flags); // this item can now be made a new item in Items
+                                Item item = new Item(name.toLowerCase(), description, flags); // this item can now be made a new item in Items
                                 if (item.description == null) {   // if item description is null
                                         System.out.println("Item " + item.name + " Description.");
                                 return true;

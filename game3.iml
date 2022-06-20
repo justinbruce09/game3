@@ -8,39 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Amazon SDE Course/Java/StudentWork/IntmJ/Software/junit-4.13/lib/hamcrest-core-1.3.jar!/" />
-          <root url="jar://C:/Amazon SDE Course/Java/StudentWork/IntmJ/Software/junit-4.13/lib/junit-4.13.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="file://C:/Amazon SDE Course/Java/StudentWork/IntmJ/Software/junit-4.13/javadoc" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="file://C:/Amazon SDE Course/Java/StudentWork/IntmJ/Software/junit-4.13/src/main/java" />
-          <root url="file://C:/Amazon SDE Course/Java/StudentWork/IntmJ/Software/junit-4.13/src/test/java" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/Amazon SDE Course/Java/StudentWork/IntroJava/Resources/jdk-11-api-docs.zip!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="jar://C:/Amazon SDE Course/Java/StudentWork/IntroJava/Resources/jdk-11-api-docs.zip!/" recursive="false" />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES />
-        <JAVADOC>
-          <root url="jar://C:/Amazon SDE Course/Java/StudentWork/IntroJava/Resources/jdk-11-api-docs.zip!/" />
-        </JAVADOC>
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="game3_jar" level="project" />
   </component>
 </module>

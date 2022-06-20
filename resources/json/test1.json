@@ -539,13 +539,12 @@
     "Info": ["help", "status", "check"],
     "Go": ["walk", "run", "move", "travel"],
     "Inspect": ["view", "look", "examine"],
-    "Take": ["pick-up", "lift", "grab", "loot"],
+    "Take": ["pick up", "lift", "grab", "loot"],
     "Open": ["unlock"],
     "Craft": ["build", "make"],
     "Interact": ["get", "search"],
     "Quit": ["exit", "leave"],
-    "Replay": ["reset", "retry", "restart"],
-    "Drop": ["leave", "throw", "toss", "put-down"]
+    "Replay": ["reset", "retry", "restart"]
 
   },
   "Crafting Recipes": {

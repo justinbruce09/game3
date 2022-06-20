@@ -147,8 +147,8 @@
       "Items": ["Shiny Spacecraft", "Unicorn Fart fuel cells", "Space Crates", "Robot Workers", "Control Panel"],
       "Connected Rooms": [
         {
-          "Inward": "Hallway2",
-          "Inward": "Hallway3"
+          "Inward left": "Hallway2",
+          "Inward right": "Hallway3"
         }
       ]
     },
@@ -159,16 +159,18 @@
       "Effect Tags": [
         {
           "Tag Name": "Locked",
-          "Tag Data": ["Unlocked with Key1"]
+          "Tag Data": ["Key1"]
         }
         ],
       "Description": "An empty hallway",
       "Items": [""],
       "Connected Rooms": [
         {
+          "Clockwise": "Hallway2",
+          "Counter-Clockwise": "Hallway4",
           "inward": "Examination Room",
-          "outward": "Crews Quarters",
-          "outward": "Specimen Storage"
+          "outward right": "Crews Quarters",
+          "outward left": "Specimen Storage"
         }
       ]
     },
@@ -179,9 +181,11 @@
       "Items": [""],
       "Connected Rooms": [
         {
+          "Clockwise": "Hallway1",
+          "Counter-Clockwise": "Hallway3",
           "Inward": "Engine Room",
-          "Outward": "Officers Quarters",
-          "Outward": "Shuttle Bay"
+          "Outward left": "Officers Quarters",
+          "Outward right": "Shuttle Bay"
         }
       ]
     },
@@ -192,6 +196,8 @@
       "Items": [""],
       "Connected Rooms": [
         {
+          "Clockwise": "Hallway2",
+          "Counter-Clockwise": "Hallway4",
           "Inward": "Bridge",
           "Outward": "Shuttle Bay"
         }
@@ -206,8 +212,10 @@
       ],
       "Connected Rooms": [
         {
-          "Outward": "Waste Excrement Facility",
-          "Outward": "Nutrient Paste Dispensary"
+          "Clockwise": "Hallway3",
+          "Counter-Clockwise": "Hallway1",
+          "Outward left": "Waste Excrement Facility",
+          "Outward right": "Nutrient Paste Dispensary"
         }
       ]
     }

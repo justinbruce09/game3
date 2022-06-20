@@ -149,7 +149,7 @@ class Game3 {
             boolean npcsCheck = true;
             for (Npc npc : ec.npcReq){
                 for(String tagName : npc.getFlags().keySet()){
-                    if(!npcs.get(npc).getFlags().containsKey(tagName)){
+                    if(!npc.getFlags().containsKey(tagName)){
                         npcsCheck = false;
                         break;
                     }

@@ -102,6 +102,7 @@ class FileParser {
                         System.out.println("Starting Room.");
                         return true;
                 }
+                startingRoom = startingRoom.toLowerCase();
                 if(roomsAtStart.containsKey(startingRoom)) return false;
                 System.out.println("Starting Room " + startingRoom + " does not exist in Rooms.");
                 return true;
@@ -204,16 +205,15 @@ class FileParser {
                                 } else flags = new HashMap<>();
 
                                 //parse items
-                                List<String> items;
+                                List<String> items = new ArrayList<>();
                                 if (roomJsonObj.keySet().contains("Items")) {
-                                        items = parseStringList(roomJsonObj.get("Items"));
-                                        if (items == null) {
+                                        List<String> items2 = parseStringList(roomJsonObj.get("Items"));
+                                        if (items2 == null) {
                                                 System.out.println("Room " + name + " Items.");
                                                 return true;
                                         }
-                                        for (int i = 0; i < items.size(); i++){
-                                                items.add(items.get(i).toLowerCase());
-                                                items.remove(items.get(i));
+                                        for (int i = 0; i < items2.size(); i++){
+                                                items.add(items2.get(i).toLowerCase());
                                         }
                                 } else items = new ArrayList<>();
                                 for(String item : items){
@@ -573,6 +573,7 @@ class FileParser {
                                         System.out.println("Crafting Recipe Result.");
                                         return true;
                                 }
+                                craftingRecipe.result = craftingRecipe.result.toLowerCase();
                                 if(!itemsAtStart.containsKey(craftingRecipe.result)){
                                         System.out.println("Item " + craftingRecipe.result + " in Crafting Recipe " +
                                                 "Result is not defined in Items.");
@@ -590,7 +591,9 @@ class FileParser {
                                         return true;
                                 }
 
-                                for (String item : craftingRecipe.ingredients){
+                                for (int i = 0; i < craftingRecipe.ingredients.size(); i++) {
+                                        String item = craftingRecipe.ingredients.get(i).toLowerCase();
+                                        craftingRecipe.ingredients.set(i, item);
                                         if(!itemsAtStart.containsKey(item)){
                                                 System.out.println("Item " + item + " in Crafting Recipe Ingredients " +
                                                         "is not defined in Items.");
@@ -643,6 +646,7 @@ class FileParser {
                                                 System.out.println("End Condition Room Requirement.");
                                                 return true;
                                         }
+                                        endCondition.roomReq = endCondition.roomReq.toLowerCase();
                                         if(!roomsAtStart.containsKey(endCondition.roomReq)){
                                                 System.out.println("Room " + endCondition.roomReq + " in End " +
                                                         "Conditions is not defined in Rooms.");
@@ -655,7 +659,9 @@ class FileParser {
                                                 System.out.println("End Condition Item Requirements");
                                                 return true;
                                         }
-                                        for (String item : endCondition.itemReq){
+                                        for (int i = 0; i < endCondition.itemReq.size(); i++){
+                                                String item = endCondition.itemReq.get(i).toLowerCase();
+                                                endCondition.itemReq.set(i, item);
                                                 if(!itemsAtStart.containsKey(item)){
                                                         System.out.println("Item " + item + " in End " +
                                                                 "Conditions is not defined in Items.");

@@ -1,0 +1,105 @@
+{
+  "Rooms": [
+    {
+      "Name": "Examination Room",
+      "Display Name": "Examination Room",
+      "Effect Tags": [
+        {
+          "Tag Name": "Tag 1",
+          "Tag Data": ["TagData 1"]
+        }
+      ],
+      "Description": "Dummy",
+      "Items": ["Item 1"],
+      "Connected Rooms": [
+        {
+          "Outward": "Hallway1"
+        }
+      ]
+    },
+    {
+      "Name": "Hallway1",
+      "Display Name": "Hallway",
+      "Description": "An empty hallway",
+      "Items": ["Item 2"],
+      "Connected Rooms": [
+        {
+          "Inward": "Examination Room"
+        }
+      ]
+    }
+  ],
+  "Items": [
+    {
+      "Name": "Item 1",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "An Item"
+    },
+    {
+      "Name": "Item 1",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Description": "Another Item"
+    }
+  ],
+  "NPCs": [
+    {
+      "Name": "",
+      "Effect Tags": [
+        {
+          "Tag Name": "",
+          "Tag Data": [""]
+        }
+      ],
+      "Dialogue": "",
+      "Alternate Dialogue": [""]
+    }
+  ],
+  "Starting Room": "Examination Room",
+  "Starting Inventory": [""],
+  "Intro Text": [""],
+  "Synonym Dictionary": {
+    "Info": [""],
+    "Go": [""],
+    "Inspect": [""],
+    "Take": [""],
+    "Open": [""],
+    "Craft": [""],
+    "Interact": [""],
+    "Quit": [""],
+    "Replay": [""]
+  },
+  "Crafting Recipes": {
+    "Result Item": "",
+    "Ingredients": [""]
+  },
+  "End Conditions": [
+    {
+      "Win": true,
+      "Room Requirement": "",
+      "Item Requirements": [""],
+      "NPC Status Requirements": [
+        {
+          "Name": "",
+          "Effect Tags": [
+            {
+              "Tag Name": "",
+              "Tag Data": [""]
+            }
+          ],
+          "Dialogue": "",
+          "Alternate Dialogue": [""]
+        }
+      ]
+    }
+  ]
+}

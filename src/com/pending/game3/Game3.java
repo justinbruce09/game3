@@ -2,6 +2,7 @@ package com.pending.game3;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -82,6 +83,9 @@ class Game3 {
         return instance.npcs;
     }
 
+    public static CraftingRecipe[] getCraftingRecipes() {
+        return (CraftingRecipe[])instance.fileParser.recipes.toArray();
+    }
 
 
     //method for starting the game

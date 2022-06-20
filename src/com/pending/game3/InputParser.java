@@ -1,5 +1,6 @@
 package com.pending.game3;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -80,10 +81,51 @@ class InputParser {
                 for (SynonymDictionary synDict: SynonymDictionary.values()) {
                     System.out.println("Command: " + synDict.name() + " valid aliases: " + synDict.synonyms);
                 }
+                return true;
+            case CRAFT:
+                crafting(userInput);
+                return true;
             default:
                 System.out.println("Command not yet supported");
        }
                 return false;
+    }
+
+    private void crafting(Scanner userInput) {
+        if(Game3.getCurrentRoom().getFlags().containsKey("Crafting")){
+            List<CraftingRecipe> availableRecipes = new ArrayList<>();
+            for (CraftingRecipe recipe : Game3.getCraftingRecipes()) {
+                for(String item : recipe.ingredients){
+                    if(!Game3.getInventory().contains(item)){
+                        break;
+                    }
+                }
+                availableRecipes.add(recipe);
+            }
+            while (availableRecipes.size() > 0){
+                System.out.println("Select an item to craft: ");
+                for (int i = 0; i < availableRecipes.size(); i++){
+                    System.out.print("[" + (i + 1) + "]: " + availableRecipes.get(i).result + ": materials: ");
+                    for(String ingredient : availableRecipes.get(i).ingredients){
+                        System.out.print(ingredient + ", ");
+                    }
+                    System.out.println();
+                }
+                String input = userInput.nextLine();
+                try{
+                    int inputIndex = Integer.parseInt(input) - 1;
+                    CraftingRecipe selectedRecipe = availableRecipes.get(inputIndex);
+                    for (String item : selectedRecipe.ingredients){
+                        Game3.getInventory().remove(item);
+                    }
+                    Game3.getInventory().add(selectedRecipe.result);
+                    System.out.println("Successfully crafted " + selectedRecipe.result);
+                    break;
+                } catch (Exception e) {
+                    System.out.println("Invalid Input, try again.");
+                }
+            }
+        }
     }
 
     private void goToRoom(String destination) {
